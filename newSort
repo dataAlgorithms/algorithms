@@ -10,6 +10,17 @@ def getRandomNum(num=60):
     print winning_numbers
     return winning_numbers
 
+# bubble sort
+def bubbleSort(theSeq):
+
+    n = len(theSeq)
+    for i in range(n-1):
+        for j in range(n-i-1):
+            if theSeq[j] > theSeq[j+1]:
+                tmp = theSeq[j]
+                theSeq[j] = theSeq[j+1]
+                theSeq[j+1] = tmp
+                
 # insert sort
 def insertSort(theSeq):
 
@@ -22,6 +33,21 @@ def insertSort(theSeq):
             pos = pos - 1
 
         theSeq[pos] = pivot
+        
+# select sort
+def selectSort(theSeq):
+
+    n = len(theSeq)
+    for i in range(n-1):
+        smallNdx = i
+        for j in range(i+1, n):
+            if theSeq[j] < theSeq[smallNdx]:
+                smallNdx = j
+
+        if smallNdx != i:
+            tmp = theSeq[smallNdx]
+            theSeq[smallNdx] = theSeq[i]
+            theSeq[i] = tmp
 
 if __name__ == "__main__":
     print "Primary numbers:\r"
@@ -31,3 +57,16 @@ if __name__ == "__main__":
     insertSort(theSeq)
     print theSeq
     
+    print "\rPrimary numbers:\r"
+    theSeq = getRandomNum()
+    
+    print "Bubble sorted numbers:\r"
+    bubbleSort(theSeq)
+    print theSeq
+    
+    print "\rPrimary numbers:\r"
+    theSeq = getRandomNum()
+    
+    print "Select sorted numbers:\r"
+    selectSort(theSeq)
+    print theSeq
