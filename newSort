@@ -1,0 +1,33 @@
+# get random numbers
+def getRandomNum(num=60):
+
+    import random
+
+    lottery_numbers = range(-1000, 1000)
+    
+    winning_numbers = random.sample(lottery_numbers, num)
+    
+    print winning_numbers
+    return winning_numbers
+
+# insert sort
+def insertSort(theSeq):
+
+    n = len(theSeq)
+    for i in range(1,n):
+        pos = i
+        pivot = theSeq[pos]
+        while pos > 0 and pivot < theSeq[pos-1]:
+            theSeq[pos] = theSeq[pos-1]
+            pos = pos - 1
+
+        theSeq[pos] = pivot
+
+if __name__ == "__main__":
+    print "Primary numbers:\r"
+    theSeq = getRandomNum()
+    
+    print "Insert sorted numbers:\r"
+    insertSort(theSeq)
+    print theSeq
+    
