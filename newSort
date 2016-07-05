@@ -49,6 +49,51 @@ def selectSort(theSeq):
             theSeq[smallNdx] = theSeq[i]
             theSeq[i] = tmp
 
+# merge sort
+def mergeSort(theSeq):
+
+    n = len(theSeq)
+    tmpList = [0] * n
+    recMergeSort(theSeq, 0, n-1, tmpList)
+
+def recMergeSort(theSeq, first, last, tmpList):
+
+    if first >= last:
+        return
+    else:
+        mid = (first + last) // 2
+        recMergeSort(theSeq, first, mid, tmpList)
+        recMergeSort(theSeq, mid+1, last, tmpList)
+        mergeVitualSeq(theSeq, first, mid+1, last+1, tmpList)
+
+def mergeVitualSeq(theSeq, left, right, end, tmpList):
+
+    a = left
+    b = right
+    m = 0
+    while a < right and b < end:
+        if theSeq[a] < theSeq[b]:
+            tmpList[m] = theSeq[a]
+            m += 1
+            a += 1
+        else:
+            tmpList[m] = theSeq[b]
+            m += 1
+            b += 1
+
+    while a < right:
+        tmpList[m] = theSeq[a]
+        m += 1
+        a += 1
+
+    while b < end:
+        tmpList[m] = theSeq[b]
+        m += 1
+        b += 1
+
+    for i in range(end-left):
+        theSeq[left+i] = tmpList[i]
+        
 if __name__ == "__main__":
     print "Primary numbers:\r"
     theSeq = getRandomNum()
@@ -69,4 +114,11 @@ if __name__ == "__main__":
     
     print "Select sorted numbers:\r"
     selectSort(theSeq)
+    print theSeq
+    
+    print "\rPrimary numbers:\r"
+    theSeq = getRandomNum()
+    
+    print "Merge sorted numbers:\r"
+    mergeSort(theSeq)
     print theSeq
