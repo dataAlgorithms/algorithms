@@ -62,6 +62,7 @@ def ikjAlgoMain():
 '''
 3. Psyco ikj-algorithm
 
+psyco only work for python2.6 
 
 def psycoIkjAlgoMain():
     import psyco
