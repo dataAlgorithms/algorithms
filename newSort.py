@@ -132,8 +132,7 @@ def partitionSeq(theSeq, first, last):
     return right
       
 #6. heap sort
-
- # The main function to sort an array of given size
+# The main function to sort an array of given size
 def heapSort(arr):
 
     # To heapify subtree rooted at index i.
