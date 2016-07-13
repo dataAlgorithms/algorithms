@@ -10,7 +10,7 @@ def getRandomNum(num=60):
     print winning_numbers
     return winning_numbers
 
-# bubble sort
+#1. bubble sort
 def bubbleSort(theSeq):
 
     n = len(theSeq)
@@ -21,7 +21,7 @@ def bubbleSort(theSeq):
                 theSeq[j] = theSeq[j+1]
                 theSeq[j+1] = tmp
                 
-# insert sort
+#2. insert sort
 def insertSort(theSeq):
 
     n = len(theSeq)
@@ -34,7 +34,7 @@ def insertSort(theSeq):
 
         theSeq[pos] = pivot
         
-# select sort
+#3. select sort
 def selectSort(theSeq):
 
     n = len(theSeq)
@@ -49,7 +49,7 @@ def selectSort(theSeq):
             theSeq[smallNdx] = theSeq[i]
             theSeq[i] = tmp
 
-# merge sort
+#4. merge sort
 def mergeSort(theSeq):
 
     n = len(theSeq)
@@ -94,6 +94,7 @@ def mergeVitualSeq(theSeq, left, right, end, tmpList):
     for i in range(end-left):
         theSeq[left+i] = tmpList[i]
   
+#5. quick sort
 def quickSort(theSeq):
 
     n = len(theSeq)
@@ -130,6 +131,53 @@ def partitionSeq(theSeq, first, last):
 
     return right
       
+#6. heap sort
+# To heapify subtree rooted at index i.
+# n is size of heap
+def heapify(arr, n, i):
+    largest = i  # Initialize largest as root
+    l = 2 * i + 1     # left = 2*i + 1
+    r = 2 * i + 2     # right = 2*i + 2
+ 
+    # See if left child of root exists and is
+    # greater than root
+    if l < n and arr[i] < arr[l]:
+        largest = l
+ 
+    # See if right child of root exists and is
+    # greater than root
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+ 
+    # Change root, if needed
+    if largest != i:
+        arr[i],arr[largest] = arr[largest],arr[i]  # swap
+ 
+        # Heapify the root.
+        heapify(arr, n, largest)
+ 
+# The main function to sort an array of given size
+def heapSort(arr):
+    n = len(arr)
+ 
+    # Build a maxheap.
+    for i in range(n, -1, -1):
+        heapify(arr, n, i)
+ 
+    # One by one extract elements
+    for i in range(n-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]   # swap
+        heapify(arr, i, 0)
+ 
+# Driver code to test above
+def heapSortMain(arr=[ 12, 11, 13, 5, 6, 7]):
+
+    heapSort(arr)
+    n = len(arr)
+    print ("Sorted array is")
+    for i in range(n):
+        print ("%d" %arr[i]),
+        
 if __name__ == "__main__":
     print "Primary numbers:\r"
     theSeq = getRandomNum()
@@ -164,4 +212,8 @@ if __name__ == "__main__":
     
     print "Quick sorted numbers:\r"
     quickSort(theSeq)
+    print theSeq
+
+    print "Heap sorted numbers:\r"
+    heapSortMain(theSeq)
     print theSeq
