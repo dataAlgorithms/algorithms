@@ -231,5 +231,5 @@ if __name__ == "__main__":
     print theSeq
 
     print "Heap sorted numbers:\r"
-    heapSortMain(theSeq)
+    heapSort(theSeq)
     print theSeq
