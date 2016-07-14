@@ -169,30 +169,6 @@ def heapSort(arr):
     for i in range(n-1, 0, -1):
         arr[i], arr[0] = arr[0], arr[i]   # swap
         heapify(arr, i, 0)
-
-#7. new heap sort
-def newheapsort(sqc):                                 
-    def down_heap(sqc, k, n):                            
-        parent = sqc[k]                                  
-
-        while 2*k+1 < n:                                 
-            child = 2*k+1                                
-            if child+1 < n and sqc[child] < sqc[child+1]:
-                child += 1                               
-            if parent >= sqc[child]:                     
-                break                                    
-            sqc[k] = sqc[child]                          
-            k = child                                    
-        sqc[k] = parent                                  
-
-    size = len(sqc)                                      
-
-    for i in range(size/2-1, -1, -1):                    
-        down_heap(sqc, i, size)                          
-
-    for i in range(size-1, 0, -1):                       
-        sqc[0], sqc[i] = sqc[i], sqc[0]                  
-        down_heap(sqc, 0, i)   
         
 if __name__ == "__main__":
     print "Primary numbers:\r"
