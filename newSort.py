@@ -97,40 +97,30 @@ def mergeVitualSeq(theSeq, left, right, end, tmpList):
 #5. quick sort
 def quickSort(theSeq):
 
+    def partitionSeq(theSeq, p, r):
+
+        x = theSeq[r]
+        i = p - 1
+        for j in range(p, r):
+            if theSeq[j] <= x:
+                i = i + 1
+                theSeq[i],theSeq[j] = theSeq[j],theSeq[i]
+
+        theSeq[i+1],theSeq[r] = theSeq[r],theSeq[i+1]
+        return i+1
+
+    def recQuickSort(theSeq, first, last):
+
+        if first >= last:
+            return
+        else:
+            pos = partitionSeq(theSeq, first, last)
+            recQuickSort(theSeq, first, pos-1)
+            recQuickSort(theSeq, pos+1, last)
+
     n = len(theSeq)
     recQuickSort(theSeq, 0, n-1)
 
-def recQuickSort(theSeq, first, last):
-
-    if first >= last:
-        return
-    else:
-        pos = partitionSeq(theSeq, first, last) 
-        recQuickSort(theSeq, first, pos-1)
-        recQuickSort(theSeq, pos+1, last)
-
-def partitionSeq(theSeq, first, last):
-
-    pivot = theSeq[first]
-
-    left = first + 1
-    right = last
-    while left <= right:
-        while left <= right and theSeq[left] <= pivot:
-            left += 1
-
-        while right >= left and theSeq[right] >= pivot:
-            right -= 1
-
-        if left < right:
-            theSeq[left], theSeq[right] = theSeq[right], theSeq[left]
-
-    if first != right:
-        theSeq[first] = theSeq[right]
-        theSeq[right] = pivot
-
-    return right
-      
 #6. heap sort
 # The main function to sort an array of given size
 def heapSort(arr):
