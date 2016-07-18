@@ -202,7 +202,24 @@ def countSort(theSeq):
 
 
     k = diffMaxMin(theSeq)
-    return countSortMain(theSeq, k)
+    theSeq = countSortMain(theSeq, k)
+
+    flag = 0
+    for i in range(len(theSeq)):
+
+        if theSeq[i] < 0:
+            flag = 1
+            break
+
+    if flag == 1:
+        newSeq = theSeq[:i]
+        tmpSeq = theSeq[i:]
+
+        tmpSeq.extend(newSeq)
+    else:
+        tmpSeq = theSeq 
+        
+    return tmpSeq
     
 if __name__ == "__main__":
     print "Primary numbers:\r"
