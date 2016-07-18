@@ -159,7 +159,51 @@ def heapSort(arr):
     for i in range(n-1, 0, -1):
         arr[i], arr[0] = arr[0], arr[i]   # swap
         heapify(arr, i, 0)
-        
+  
+#7. count sort
+def countSort(theSeq):
+
+    def countSortMain(A, k):
+        n = len(A)
+
+        B = []
+        for i in range(n):
+            B.append(0)
+
+        C = []
+        for i in range(k):
+            C.append(0)
+
+        for j in range(0, n):
+            C[A[j]] = C[A[j]] + 1
+
+        for i in range(1, k):
+            C[i] = C[i] + C[i-1]
+
+        for j in range(n-1, -1, -1): 
+            B[C[A[j]]-1] = A[j]
+            C[A[j]] = C[A[j]] - 1
+
+        return B
+
+
+    def diffMaxMin(A):
+
+        small = A[0]
+        large = A[0]
+        for i in A:
+            if i < small:
+                small = i
+
+            if i > large:
+                large = i
+
+        return large - small + 1
+
+
+    k = diffMaxMin(theSeq)
+    return countSortMain(theSeq, k)
+    
 if __name__ == "__main__":
     print "Primary numbers:\r"
     theSeq = getRandomNum()
