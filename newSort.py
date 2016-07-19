@@ -221,6 +221,48 @@ def countSort(theSeq):
         
     return tmpSeq
     
+#8. radix sort
+def radixSort(theSeq=None):
+
+    if theSeq is None:
+        return
+
+    def getDigitNum(sNum=None):
+        if sNum is None:
+            return
+
+        num = 0
+        j = 1
+        while sNum >= 1:
+            sNum /= j
+            num += 1
+            j *= 10
+
+        return num
+
+    def radixSortMain(theSeq):
+
+        intSeq = [int(item) for item in theSeq]
+        bins = [[] for i  in range(10)]   # 10-radix
+        maxItem = max(intSeq)
+        num = getDigitNum(maxItem)
+  
+        r = 1
+        for i in range(num):
+            for key in intSeq:
+                bins[(key//r)%10].append(key)
+
+            r = r * 10
+
+            intSeq = []
+            for i in range(num):
+                intSeq.extend(bins[i])
+                bins[i] = []
+
+        return intSeq
+
+    return radixSortMain(theSeq)
+    
 if __name__ == "__main__":
     print "Primary numbers:\r"
     theSeq = getRandomNum()
