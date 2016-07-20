@@ -95,3 +95,27 @@ def longestPalSubStr(aStr=None):
         print aStr[start:start+maxLength]
     else:
         print 'not found!'
+        
+4. Find triple whose sum is equal to specfic value
+def findTripleSum(theSeq, theSum):
+
+    theSeq = sorted(theSeq)
+    n = len(theSeq)
+    num = 0
+    tmpList = []
+    for i in range(0, n-2):
+        j = i+1
+        k = n - 1
+        while j < k:
+            if theSeq[i] + theSeq[j] + theSeq[k] >= theSum:
+                k -= 1
+            else:
+                tmp = k
+                while j < tmp:
+                    tmpList.append([theSeq[i],theSeq[j],theSeq[tmp]])
+                    tmp -= 1
+
+                num += (k-j)
+                j += 1
+    print tmpList
+    print num
