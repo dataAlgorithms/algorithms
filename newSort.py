@@ -222,46 +222,40 @@ def countSort(theSeq):
     return tmpSeq
     
 #8. radix sort
-def radixSort(theSeq=None):
+def radixSort(a, radix=10, debug=1):
 
-    if theSeq is None:
-        return
+    def getMaxDigitNum(a, radix=10, debug=1):
+        intList = [int(item) for item in a]
+        maxItem = max(intList)
 
-    def getDigitNum(sNum=None):
-        if sNum is None:
-            return
-
-        num = 0
+        count = 0
         j = 1
-        while sNum >= 1:
-            sNum /= j
-            num += 1
-            j *= 10
+        while maxItem  >= 1:
+            maxItem  /= j
+            count += 1
+            j *= radix
 
-        return num
+        if debug == 1:
+            print count
 
-    def radixSortMain(theSeq):
+        return count
 
-        intSeq = [int(item) for item in theSeq]
-        bins = [[] for i  in range(10)]   # 10-radix
-        maxItem = max(intSeq)
-        num = getDigitNum(maxItem)
-  
-        r = 1
-        for i in range(num):
-            for key in intSeq:
-                bins[(key//r)%10].append(key)
+    k = getMaxDigitNum(a, radix=10, debug=1)
+    buckets = [[] for i in range(radix)]
+    for i in range(1, k+1):
+        for key in a:
+            buckets[key%(radix**i)/(radix**(i-1))].append(key)
 
-            r = r * 10
+        del a[:]
+        for each in buckets:
+            a.extend(each)
 
-            intSeq = []
-            for i in range(num):
-                intSeq.extend(bins[i])
-                bins[i] = []
+        buckets = [[] for i in range(radix)]
 
-        return intSeq
+    if debug == 1:
+        print a
 
-    return radixSortMain(theSeq)
+    return a
     
 if __name__ == "__main__":
     print "Primary numbers:\r"
