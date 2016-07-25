@@ -1,3 +1,5 @@
+import math 
+
 # get random numbers
 def getRandomNum(num=60):
 
@@ -257,6 +259,40 @@ def radixSort(a, radix=10, debug=1):
 
     return a
     
+#9. bucket sort
+def bucketSort(array, bucketSize=1):
+    if len(array) == 0:
+        return array
+
+    # Determine minimum and maximum values
+    minValue = array[0]
+    maxValue = array[0]
+    for i in range(1, len(array)):
+        if array[i] < minValue:
+            minValue = array[i]
+        elif array[i] > maxValue:
+            maxValue = array[i]
+
+    # Initialize buckets
+    bucketCount = math.floor((maxValue - minValue) / bucketSize) + 1
+    bucketCount = int(bucketCount)
+    buckets = []
+    for i in range(0, bucketCount):
+        buckets.append([])
+
+    # Distribute input array values into buckets
+    for i in range(0, len(array)):
+        buckets[int(math.floor((array[i] - minValue) / bucketSize))].append(array[i])
+
+    # Sort buckets and place back into input array
+    array = []
+    for i in range(0, len(buckets)):
+        insertSort(buckets[i])
+        for j in range(0, len(buckets[i])):
+            array.append(buckets[i][j])
+
+    return array
+    
 if __name__ == "__main__":
     print "Primary numbers:\r"
     theSeq = getRandomNum()
@@ -296,3 +332,10 @@ if __name__ == "__main__":
     print "Heap sorted numbers:\r"
     heapSort(theSeq)
     print theSeq
+    
+    print "\rPrimary numbers:\r"
+    theSeq = getRandomNum()
+    
+    print "Bucket sorted numbers:\r"
+    newSeq = bucketSort(theSeq)
+    print newSeq
