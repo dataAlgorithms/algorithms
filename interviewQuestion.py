@@ -119,3 +119,19 @@ def findTripleSum(theSeq, theSum):
                 j += 1
     print tmpList
     print num
+    
+5. Given an array of distinct elements, rearrange the elements of array in zig-zag fashion in O(n) time. 
+The converted array should be in form a < b > c < d > e < f.
+def zigZaq(theSeq):
+
+    n = len(theSeq)
+    flag = True
+    for i in range(0, n-1):
+        if flag:
+            if theSeq[i] > theSeq[i+1]:
+                theSeq[i],theSeq[i+1] = theSeq[i+1],theSeq[i]
+        else:
+            if theSeq[i] < theSeq[i+1]:
+                theSeq[i],theSeq[i+1] = theSeq[i+1],theSeq[i]
+
+        flag = not flag
