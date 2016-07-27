@@ -199,3 +199,30 @@ Output:
 """
 if __name__ == "__main__":
     alternateItems()
+
+#7. Pythagorean triplet
+def isTriplet(aList=[3, 1, 4, 6, 5]):
+
+    n = len(aList)
+    for i in range(n):
+        aList[i] = aList[i] * aList[i]
+
+    sorted(aList)
+
+    for i in range(n-1, 1, -1):
+        l = 0
+        r = i - 1
+        while l < r:
+            if aList[l] + aList[r] == aList[i]:
+                return True
+        
+            if aList[l] + aList[r] < aList[i]:
+                l += 1
+            else:
+                r -= 1
+
+    return False
+
+if __name__ == "__main__":
+    print isTriplet()   #True
+    print isTriplet(aList=[10, 4, 6, 12, 5]) #False
