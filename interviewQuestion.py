@@ -135,3 +135,67 @@ def zigZaq(theSeq):
                 theSeq[i],theSeq[i+1] = theSeq[i+1],theSeq[i]
 
         flag = not flag
+
+6. Generate all possible sorted arrays from alternate elements of two given sorted arrays
+# Driver program
+def alternateItems():
+
+    # Wrapper function
+    def generate(aList, bList, m, n):
+
+        cList = [0 for _ in range(m+n)]
+        generateUtil(aList, bList, cList, 0, 0, m, n, 0, True)
+
+    '''
+    /* Function to generates and prints all sorted arrays from alternate elements of
+       'A[i..m-1]' and 'B[j..n-1]'
+       If 'flag' is true, then current element is to be included from A otherwise
+       from B.
+       'len' is the index in output array C[]. We print output  array  each time
+       before including a character from A only if length of output array is
+       greater than 0. We try than all possible combinations */
+    '''
+    def generateUtil(aList, bList, cList, i, j, m, n, l, flag):
+    
+        if flag:
+            if l:
+                printArr(cList, l+1)
+    
+            for k in range(i, m):
+                if not l:
+                    cList[l] = aList[k]
+                    generateUtil(aList, bList, cList, k+1, j, m, n, l, not flag)
+                else:
+                    if aList[k] > cList[l]:
+                        cList[l+1] = aList[k]
+                        generateUtil(aList, bList, cList, k+1, j, m, n, l+1, not flag)
+        else:
+            for p in range(j, n):
+                if bList[p] > cList[l]:
+                    cList[l+1] = bList[p]
+                    generateUtil(aList, bList, cList, i, p+1, m, n, l+1, not flag)
+    
+    # A utility function to print an array
+    def printArr(arr, n):
+        for i in range(n):
+            print arr[i],
+        print ''
+            
+    aList = [10, 15, 25]
+    bList = [5, 20, 30]
+    n = len(aList)
+    m = len(bList)
+    generate(aList, bList, n, m)
+       
+"""
+Output:
+10 20 
+10 20 25 30 
+10 30 
+15 20 
+15 20 25 30 
+15 30 
+25 30 
+"""
+if __name__ == "__main__":
+    alternateItems()
