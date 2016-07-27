@@ -223,6 +223,11 @@ def isTriplet(aList=[3, 1, 4, 6, 5]):
 
     return False
 
+"""
+Output
+True
+False
+"""
 if __name__ == "__main__":
     print isTriplet()   #True
     print isTriplet(aList=[10, 4, 6, 12, 5]) #False
