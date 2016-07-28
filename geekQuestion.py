@@ -231,3 +231,23 @@ False
 if __name__ == "__main__":
     print isTriplet()   #True
     print isTriplet(aList=[10, 4, 6, 12, 5]) #False
+
+#8. Given a sorted array (sorted in non-decreasing order) of positive numbers, 
+# find the smallest positive integer value that cannot be represented as sum of elements of any subset of given set. 
+def findSmallNotSum(aList):
+
+    res = 1
+    i = 0
+    n = len(aList)
+    while i < n and aList[i] <= res:
+        res += aList[i]
+        i += 1
+
+    return res
+
+if __name__ == "__main__":
+
+    for aList in [[1, 3, 6, 10, 11, 15], [1, 1, 1, 1],
+                 [1, 1, 3, 4], [1, 2, 5, 10, 20, 40],
+                 [1, 2, 3, 4, 5, 6]]:
+        print findSmallNotSum(aList)   
