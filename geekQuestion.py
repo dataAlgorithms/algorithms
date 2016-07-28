@@ -245,6 +245,13 @@ def findSmallNotSum(aList):
 
     return res
 
+"""
+2
+5
+10
+4
+22
+"""
 if __name__ == "__main__":
 
     for aList in [[1, 3, 6, 10, 11, 15], [1, 1, 1, 1],
