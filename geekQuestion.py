@@ -259,7 +259,7 @@ if __name__ == "__main__":
                  [1, 2, 3, 4, 5, 6]]:
         print findSmallNotSum(aList)   
 
-#9. # Given an array of integers and a number x, 
+#9. Given an array of integers and a number x, 
 # find the smallest subarray with sum greater than the given value.
 def smallestSubWithSum(aList, x):
 
@@ -302,3 +302,54 @@ if __name__ == "__main__":
     aList = [1, 11, 100, 1, 0, 200, 3, 2, 1, 250]
     x = 280
     print smallestSubWithSum(aList, x)
+
+# 10 Stock Buy Sell to Maximize Profit
+# The cost of a stock on each day is given in an array, find the max profit that you can make by buying and selling in those days. 
+def stockBuySell(price):
+
+    class Interval:
+        # Init
+        def __init__(self):
+            self.buy = None
+            self.sell = None
+        
+    n = len(price)
+    if n == 1:
+        return
+
+    count = 0
+    interval = Interval
+    sol = [interval() for i in range(n/2+1)]
+
+    i = 0
+    while i < n-1:
+        while i < n-1 and price[i+1] <= price[i]:
+            i += 1
+
+        if i == n-1:
+            break
+
+        sol[count].buy = i
+        i += 1
+
+        while i < n and price[i] >= price[i-1]:
+            i += 1
+
+        sol[count].sell = i-1
+
+        count += 1
+
+
+    if count == 0:
+        print 'no day!'
+    else:
+        for i in range(count):
+            print 'buy on day:%d\t sell on day:%d\n' % (sol[i].buy, sol[i].sell)
+
+"""
+buy on day:0     sell on day:3
+buy on day:4     sell on day:6
+"""
+if __name__ == "__main__":
+    price = [100, 180, 260, 310, 40, 535, 695]
+    stockBuySell(price)        
