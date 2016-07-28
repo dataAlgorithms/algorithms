@@ -258,3 +258,47 @@ if __name__ == "__main__":
                  [1, 1, 3, 4], [1, 2, 5, 10, 20, 40],
                  [1, 2, 3, 4, 5, 6]]:
         print findSmallNotSum(aList)   
+
+#9. # Given an array of integers and a number x, 
+# find the smallest subarray with sum greater than the given value.
+def smallestSubWithSum(aList, x):
+
+    curr_sum = 0
+    n = len(aList)
+    min_len = n + 1
+
+    bList = []
+    start = 0
+    end = 0
+    while end < n:
+        while curr_sum <= x and end < n:
+            curr_sum += aList[end]
+            end += 1
+
+        while curr_sum > x and start < n:
+            if end - start < min_len:
+                min_len = end - start
+                bList = aList[start:end]
+            
+            curr_sum -= aList[start]
+            start += 1
+
+    return min_len, bList
+
+"""
+(3, [4, 45, 6])
+(1, [10])
+(4, [100, 1, 0, 200])
+"""
+if __name__ == "__main__":
+    aList = [1, 4, 45, 6, 0, 19]
+    x = 51
+    print smallestSubWithSum(aList, x)
+
+    aList = [1, 10, 5, 2, 7]
+    x = 9
+    print smallestSubWithSum(aList, x)
+
+    aList = [1, 11, 100, 1, 0, 200, 3, 2, 1, 250]
+    x = 280
+    print smallestSubWithSum(aList, x)
