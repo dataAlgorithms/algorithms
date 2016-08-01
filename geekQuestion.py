@@ -417,3 +417,52 @@ maxSum: 15
 if __name__ == "__main__":
     iterable = [8, 1, 2, 12, 7, 6]
     print maxSubarrayXOR(iterable)
+
+12. A magic number is defined as a number which can be expressed as a power of 5 or sum of unique powers of 5. 
+First few magic numbers are 5, 25, 30(5 + 25), 125, 130(125 + 5), ….
+
+Write a function to find the n’th Magic number.
+
+Example:
+
+Input: n = 2
+Output: 25
+
+Input: n = 5
+Output: 130 
+
+
+If we notice carefully the magic numbers can be represented as 001, 010, 011, 100, 101, 110 etc,
+ where 001 is 0*pow(5,3) + 0*pow(5,2) + 1*pow(5,1).
+       010 is 0*pow(5,3) + 1*pow(5,2) + 0*pow(5,1)
+       011 is 0*pow(5,3) + 1*pow(5,2) + 1*pow(5,1)
+       
+
+def nthMagicNo(n):
+
+    pow = 1
+    answer = 0
+
+    while n:
+        pow = pow * 5
+
+        # If lastbit of n is set
+        if n & 1:
+            answer += pow
+
+        # proceed to next bit
+        n /= 2
+
+    print answer
+    return answer
+
+"""
+5
+25
+30
+125
+130
+"""
+if __name__ == "__main__":
+    for i in range(1, 6):
+        nthMagicNo(i)
