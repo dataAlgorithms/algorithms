@@ -353,3 +353,67 @@ buy on day:4     sell on day:6
 if __name__ == "__main__":
     price = [100, 180, 260, 310, 40, 535, 695]
     stockBuySell(price)        
+
+11. Find the maximum subarray XOR in a given array
+Given an array of integers. 
+
+def maxSubarrayXOR(arr):
+
+
+    n = len(arr)
+    aList = [[] for i in range(n)]
+
+    sumList = []
+    for i in range(0, n):
+
+        curr_xor = 0
+        bList = []
+        ans = 0
+        for j in range(i, n):
+
+            curr_xor = curr_xor ^ arr[j]        
+            if curr_xor > ans:
+                ans = curr_xor
+                bList.append(arr[j])
+            else:
+                break
+
+        aList[i] = bList
+        sumList.append(ans)
+
+    theIndex = 0
+    theSum = sumList[0]
+    for i in range(len(sumList)):
+        if sumList[i] > theSum:
+            theIndex = i
+            theSum = sumList[i]
+
+    maxList = aList[theIndex]
+
+    print 'maxList:', maxList
+    print 'maxSum:', theSum
+    return theSum,maxList
+
+def max_xor_opt(iterable):
+    array = list(iterable)  # make it a list so that we can iterate it twice
+    if not array:  # special case the empty array to avoid an empty max
+        return 0
+    x = 0
+    while True:
+        y = max(array)
+        print 'y:', y
+        if y == 0:
+            return x
+        # y has the leading 1 in the array
+        x = max(x, x ^ y)
+        # eliminate
+        array = [min(z, z ^ y) for z in array]
+
+"""
+maxList: [1, 2, 12]
+maxSum: 15
+(15, [1, 2, 12])
+"""
+if __name__ == "__main__":
+    iterable = [8, 1, 2, 12, 7, 6]
+    print maxSubarrayXOR(iterable)
