@@ -512,3 +512,52 @@ if __name__ == "__main__":
 
     arr = [1, 3, 7, 8]
     print sumBitDiff(arr)
+
+14. Find the element that appears once
+Given an array where every element occurs three times, except one element
+which occurs only once. Find the element that occurs once. 
+Expected time complexity is O(n) and O(1) extra space.
+Examples:
+
+Input: arr[] = {12, 1, 12, 3, 12, 1, 1, 2, 3, 3}
+Output: 2
+
+def getSingle(arr):
+
+    '''
+    Following is another O(n) time complexity and O(1) extra space method suggested by aj. 
+    We can sum the bits in same positions for all the numbers and take modulo with 3. 
+    The bits for which sum is not multiple of 3, are the bits of number with single occurrence.  
+    Let us consider the example array {5, 5, 5, 8}. The 101, 101, 101, 1000
+    Sum of first bits%3 = (1 + 1 + 1 + 0)%3 = 0;
+    Sum of second bits%3 = (0 + 0 + 0 + 0)%0 = 0;
+    Sum of third bits%3 = (1 + 1 + 1 + 0)%3 = 0;
+    Sum of fourth bits%3 = (1)%3 = 1;
+    Hence number which appears once is 1000
+    '''
+    INT_SIZE = 32
+    result = 0
+    n = len(arr)
+
+    # Iterate through every bit
+    for i in range(0, INT_SIZE):
+        # Find sum of set bits at ith position in all
+        # array elements
+        theSum = 0
+        x = (1 << i)
+        for j in range(0, n):
+            if arr[j] & x:
+                theSum += 1
+
+        # The bits with sum not multiple of 3,
+        # are the bits of element with single occurrence
+        if theSum %3:
+            result |= x
+
+    return result
+
+if __name__ == "__main__":
+    arr = [12, 1, 12, 3, 12, 1, 1, 2, 3, 2, 2, 3, 7]
+    print getSingle(arr)
+    arr = [12, 1, 12, 3, 12, 1, 1, 2, 3, 3]
+    print getSingle(arr)
