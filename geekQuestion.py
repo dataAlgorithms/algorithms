@@ -561,3 +561,35 @@ if __name__ == "__main__":
     print getSingle(arr)
     arr = [12, 1, 12, 3, 12, 1, 1, 2, 3, 3]
     print getSingle(arr)
+
+15. convert number to any radix
+def numToAny(n, base=2):
+
+    if n > 1:
+        numToAny(n/base, base=base)
+
+    if base != 16:
+        print n%base,
+    else:
+        baseDict = {10:'a',11:'b',12:'c',13:'d',14:'e',15:'f'}
+        if n%base in [10,11,12,13,14,15]:
+            print baseDict[n%base],
+        else:
+            print n%base,
+
+'''
+1 1 1
+1 0 0
+1 1 0 0
+0 9 6
+0 2 2 5
+'''
+if __name__ == "__main__":
+    for n in [7, 4, 12]:
+        numToAny(n)
+        print ''
+
+    numToAny(150, 16)
+    print ''
+
+    numToAny(149, 8)
