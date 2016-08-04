@@ -96,7 +96,7 @@ def longestPalSubStr(aStr=None):
     else:
         print 'not found!'
         
-4. Find triple whose sum is equal to specfic value
+4. Find triple whose sum is less than specfic value
 def findTripleSum(theSeq, theSum):
 
     theSeq = sorted(theSeq)
