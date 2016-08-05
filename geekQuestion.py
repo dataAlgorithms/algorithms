@@ -665,3 +665,46 @@ def _countSetBits(n, m):
 if __name__ == "__main__":
     for n in [3, 6, 7, 8, 17]:
         print countSetBits(n)
+
+17. Rotate bits of a number
+Bit Rotation: A rotation (or circular shift) is an operation similar to shift except that
+ the bits that fall off at one end are put back to the other end.
+def rotateBit(n, d, flag=0):
+
+    '''
+    n, primary number
+    d, rotate bit number
+    flag=0, left rotate
+    flag=1, right rotate
+    '''
+
+    INT_BITS = 32
+
+    def leftRotate(n, d):
+        '''
+        In n<<d, last d bits are 0, To put first 3 bits of n at
+        last, do bitwise or of n<<d with n >> (INT_BITS - d)
+        '''
+        return (n << d) or (n >> (INT_BITS - d))
+
+    def rightRotate(n, d):
+        '''
+        In n>>d, first d tis are 0, To put last 3 bits of at
+        first, do bitwise or of n>>d with n << (INT_BITS-d)
+        '''
+        return (n >> d) or (n << (INT_BITS -d))
+
+    if flag == 0:
+        return leftRotate(n, d)
+    else:
+        return rightRotate(n, d)
+
+"""
+64
+4
+"""
+if __name__ == "__main__":
+    d  = 2
+    n = 16
+    print rotateBit(16, 2, 0)
+    print rotateBit(16, 2, 1)
