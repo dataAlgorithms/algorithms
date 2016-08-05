@@ -708,3 +708,32 @@ if __name__ == "__main__":
     n = 16
     print rotateBit(16, 2, 0)
     print rotateBit(16, 2, 1)
+
+18. Count number of bits to be flipped to convert A to B
+"""
+Count number of bits to be flipped to convert A to B
+
+eg.
+   A  = 1001001  73
+   B  = 0010101  21
+   a_xor_b = 1011100
+   No of bits need to flipped = set bit count in a_xor_b i.e. 4
+"""
+def countBit(a, b):
+
+    count = 0
+    c = a^b
+    while c != 0:
+        c &= (c-1)
+        count += 1
+
+    return count
+
+"""
+4
+"""
+if __name__ == "__main__":
+    a = 73
+    b = 21
+    print countBit(a, b)
+    
