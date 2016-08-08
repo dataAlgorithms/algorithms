@@ -737,3 +737,59 @@ if __name__ == "__main__":
     b = 21
     print countBit(a, b)
     
+19. Given a number x, find the smallest Sparse number which greater than or equal to x
+def nextSparse(x):
+
+    '''
+    Find binary representation of x and store it in binList
+    binList[0] contains least significant bit (LSB), next
+    bin is in binList[1], and so on
+    '''
+
+    binList = []
+    while x != 0:
+        binList.append(x&1)
+        x >>= 1
+
+    # There are be extra bit in result, so add one extra bit
+    binList.append(0)
+
+    # Get the size of binary representation
+    n = len(binList) 
+
+    # The position till which all bits are finalized
+    last_final = 0
+
+    # Start from second bit (next to LSB)
+    for i in range(1, n-1):
+        # If current bit and its previous bit are 1, but next
+        # bit is not 1
+        if binList[i] == 1 and binList[i-1] == 1 and binList[i+1] != 1:
+            # Make the next bit 1
+            binList[i+1] = 1
+
+            # Make all bits before current bit as 0 to make
+            # sure that we get the smallest next number
+            for j in range(i, last_final-1, -1):
+                binList[j] = 0
+
+            # Store position of the bit set so that this bit
+            # and bits before it are not changed next time
+            last_final = i+1
+
+    # Find decimal equivalent of modified binList[]
+    ans = 0
+    for i in range(0, n):
+        ans += binList[i]*(1<<i)
+
+    return ans
+
+'''
+9
+4
+40
+64
+'''
+if __name__ == "__main__":
+    for i in [9, 4, 38, 44]:
+        print nextSparse(i)
