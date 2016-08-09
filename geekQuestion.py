@@ -793,3 +793,31 @@ def nextSparse(x):
 if __name__ == "__main__":
     for i in [9, 4, 38, 44]:
         print nextSparse(i)
+
+20. Modular Exponentiation (Power in Modular Arithmetic)
+Given three numbers x, y and p, compute (xy) % p.
+def power(x, y, p):
+
+    # Initialize result
+    res = 1
+
+    # Update x if it is more than or equal to p
+    x = x % p
+
+    while y > 0:
+        # If y is odd, multiply x with result
+        if y & 1:
+            res = (res*x) % p
+
+        # y must be even now
+        y = y>>1
+        x = (x*x) % p
+
+    return res
+
+if __name__ == "__main__":
+    x = 2
+    y = 5
+    p = 13
+    print power(2, 5, 13)
+    print (x**y)%p
