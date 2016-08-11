@@ -922,3 +922,32 @@ if __name__ == "__main__":
     print modInverse(a, m)
     print exModInverse(a, m)
     print feModInverse(a, m)
+
+21. Check prime number
+def isPrime(num):
+
+    if num > 1:
+        for i in range(2, num):
+            if num % i == 0:
+                print '%s is not a prime number!' % num
+                break
+
+        else:
+            print '%s is a prime number!' % num
+
+    else:
+        print '%s is not a prime number!' % num
+
+'''
+1 is not a prime number!
+2 is a prime number!
+3 is a prime number!
+4 is not a prime number!
+5 is a prime number!
+6 is not a prime number!
+7 is a prime number!
+8 is not a prime number!
+'''
+if __name__ == "__main__":
+    for i in [1,2,3,4,5,6,7,8]:
+        isPrime(i)
