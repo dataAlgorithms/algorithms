@@ -951,3 +951,73 @@ def isPrime(num):
 if __name__ == "__main__":
     for i in [1,2,3,4,5,6,7,8]:
         isPrime(i)
+
+22. Calculate Eulere's Totient Function
+'''
+Euler’s Totient function Φ(n) for an input n is count of numbers 
+in {1, 2, 3, …, n} that are relatively prime to n, i.e., 
+the numbers whose GCD (Greatest Common Divisor) with n is 1.
+
+Examples:
+
+Φ(1) = 1  
+gcd(1, 1) is 1
+
+Φ(2) = 1
+gcd(1, 2) is 1, but gcd(2, 2) is 2.
+
+Φ(3) = 2
+gcd(1, 3) is 1 and gcd(2, 3) is 1
+
+Φ(4) = 2
+gcd(1, 4) is 1 and gcd(3, 4) is 1
+
+Φ(5) = 4
+gcd(1, 5) is 1, gcd(2, 5) is 1, 
+gcd(3, 5) is 1 and gcd(4, 5) is 1
+
+Φ(6) = 2
+gcd(1, 6) is 1 and gcd(5, 6) is 1, 
+How to compute Φ(n) for an input n?
+'''
+
+def phi(n):
+
+    # Initialize result as n
+    result = n
+
+    # Consider all prime factors of n and subtract their
+    # multiples from result
+    p = 2
+    while p*p <= n:
+        # Check if p is a prime factor
+        if n % p == 0:
+            # If yes, then update n and result
+            while n % p == 0:
+                n /= p
+            result -= result/p
+
+        p += 1
+
+    # If n has a prime factor greater than sqrt
+    # there can be at most one such prime factor
+    if n > 1:
+        result -= result / n
+
+    return result
+
+'''
+phi(1): 1
+phi(2): 1
+phi(3): 2
+phi(4): 2
+phi(5): 4
+phi(6): 2
+phi(7): 6
+phi(8): 4
+phi(9): 6
+phi(10): 4
+'''
+if __name__ == "__main__":
+    for n in range(1, 11):
+        print 'phi(%s): %s' % (n,phi(n))
