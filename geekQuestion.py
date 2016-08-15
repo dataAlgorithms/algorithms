@@ -1021,3 +1021,38 @@ phi(10): 4
 if __name__ == "__main__":
     for n in range(1, 11):
         print 'phi(%s): %s' % (n,phi(n))
+
+23. Sieve of Eratosthenes,
+Given a number n, print all primes smaller than or equal to n.
+
+def SieveofEratosthenes(n):
+
+    # Create a boolean array prime[0..n] and initialize
+    # all entries it as true, A value in prime[i] will
+    # finally be false if i is not a prime, else true
+    prime = [True] * (n+1)
+
+    p = 2
+    while p*p <= n:
+        # If prime[p] is not changed, then it is a prime
+        if prime[p]:
+            # update all multiples of p
+            i = p*2
+            while i <= n:
+                prime[i] = False
+                i += p
+
+        p += 1
+
+    # Print all prime number
+    for p in range(2, n+1):
+        if prime[p]:
+            print p,
+
+'''
+2 3 5 7 11 13 17 19 23 29
+'''
+if __name__ == "__main__":
+    n = 30
+    SieveofEratosthenes(n)
+    
