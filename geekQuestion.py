@@ -1154,3 +1154,42 @@ if __name__ == "__main__":
     points = [Point(0, 3), Point(2,2), Point(1,1), Point(2,1), Point(3,0), Point(0,0), Point(3,3)]
     n = len(points)
     convexHull(points, n)
+
+25. gcd
+# Basic Euclidean algorithms to gcd
+def gcd(a, b):
+
+    if a == 0:
+        return b
+
+    return gcd(b%a, a)
+
+# Extend Euclidean algorithms to gcd
+def gcdExtended(a, b):
+
+    if a == 0:
+        x = 0
+        y = 1
+
+        return x, y, b
+
+    x1, y1, g = gcdExtended(b%a, a)
+    x = y1 - (b/a) * x1
+    y = x1
+
+    return x, y, g
+
+'''
+5
+5
+1
+(-1, 1, 5)
+(1, -3, 5)
+(1, -15, 1)
+'''
+if __name__ == "__main__":
+    for i in [[10, 15], [35, 10], [31, 2]]:
+        print gcd(i[0], i[1])
+
+    for i in [[10, 15], [35, 10], [31, 2]]:
+        print gcdExtended(i[0], i[1])
