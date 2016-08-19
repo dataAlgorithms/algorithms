@@ -102,3 +102,47 @@ if __name__ == "__main__":
     print search(arr, 6)
     print search(arr, 11)
  
+3. Interpolation search 
+# Interpolation search 
+
+def interpolation_search(sorted_list, to_find):
+
+    low = 0
+    high = len(sorted_list) - 1
+
+    while sorted_list[low] <= to_find and sorted_list[high] >= to_find:
+        mid = (low + ((to_find - sorted_list[low]) * (high - low)) \
+                / (sorted_list[high] - sorted_list[low]))
+
+        if sorted_list[mid] < to_find:
+            low = mid + 1
+        elif sorted_list[mid] < to_find:
+            high = mid - 1
+        else:
+            return mid
+
+    if sorted_list[low] == to_find:
+        return low
+
+    return None
+
+'''
+Numbers:
+-100 -6 0 1 5 14 15 26 99
+
+Number 15 is at index 6
+'''
+if __name__ == "__main__":
+    # Pre-sorted numbers
+    numbers = [-100, -6, 0, 1, 5, 14, 15, 26, 99]
+    value = 15
+    
+    # Print numbers to search
+    print 'Numbers:'
+    print ' '.join([str(i) for i in numbers])
+    
+    # Find the index of 'value'
+    index = interpolation_search(numbers, value)
+
+    # Print the index where 'value' is located
+    print '\nNumber %d is at index %d' % (value, index)
