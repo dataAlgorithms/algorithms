@@ -1258,3 +1258,40 @@ if __name__ == "__main__":
     arr = [12, 3, 5, 7, 4, 19, 26]
     k = 4
     print kthSmallest(arr, 0, len(arr)-1, k)
+
+27. Print the pair with sum closest to x
+def printClosest(arr, n, x):
+
+    import sys
+
+    # Initialize left and right indexes and difference 
+    # between pair sum and x
+    l = 0
+    r = n - 1
+    diff = sys.maxint
+
+    # while there are elements between l and r
+    while r > l:
+        # check if this pair is closer than the closet pair so far
+        if abs(arr[l] + arr[r] - x) < diff:
+            res_l = l
+            res_r = r
+            diff = abs(arr[l] + arr[r] - x )
+
+        # if this pair has more sum, move to smaller values
+        if arr[l] + arr[r] > x:
+            r -= 1
+        else:
+            l += 1
+
+    print 'Closest pair is: %s %s' % (arr[res_l], arr[res_r])
+
+'''
+Closest pair is: 22 30
+'''
+if __name__ == "__main__":
+    arr = [10, 22, 28, 29, 30, 40]
+    x = 54
+    n = len(arr)
+    printClosest(arr, n, x)
+
