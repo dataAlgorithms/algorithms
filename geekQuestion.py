@@ -1341,3 +1341,37 @@ if __name__ == "__main__":
 
     ret = lcs_continuous('GAGTAB', 'GXTXAYB')
     print ret
+
+29. longest increasing subsequence
+def longIncSub(arr):
+
+    n = len(arr)
+    tmpList = []
+    
+    # Declare the list (array) for LIS and initialize LIS
+    # values for all indexes
+    lis = [1]*n
+
+    # Compute optimized LIS values in bootom up manner
+    for i in range(1, n):
+        for j in range(0, i):
+            if arr[i] > arr[j] and lis[i] < lis[j] + 1:
+                lis[i] = lis[j] + 1
+
+    # Initialize maximum to 0 to get the maximum of all LIS
+    maximum = 0
+
+    # Pick maximum of all LIS values
+    for i in range(n):
+        if lis[i] > maximum:
+            maximum = lis[i]
+            tmpList.append(arr[i])
+
+    return maximum, tmpList
+
+'''
+(5, [10, 22, 33, 50, 60])
+'''
+if __name__ == "__main__":
+    arr = [10, 22, 9, 33, 21, 50, 41, 60]
+    print longIncSub(arr)
