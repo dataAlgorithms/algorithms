@@ -1424,3 +1424,56 @@ if __name__ == "__main__":
     str2 = "saturday"
 
     print editDistance(str1, str2)
+    
+31. partition-a-set-into-two-subsets-such-that-the-difference-of-subset-sums-is-minimum/
+def findMinDP(arr):
+
+    n = len(arr)
+
+    # Calculate sum of all elements
+    theSum = 0
+    for i in range(n):
+        theSum += arr[i]
+
+    # Create an array to store results of subproblems
+    dp = [[False]*(theSum+1) for _ in range(n+1)]
+
+    # Initialize first column as true, 0 sum is possible
+    # with all elements
+    for  i in range(0, n+1):
+        dp[i][0] = True
+
+    # Initialize top row, except dp[0][0], as false
+    # with 0 elements, no other sum except 0 is possible
+    for i in range(1, theSum+1):
+        dp[0][i] = False
+
+    # Fill the partition table in bottom up manner
+    for i in range(1, n+1):
+        for j in range(1, theSum+1):
+            # If ith element is excluded
+            dp[i][j] = dp[i-1][j]
+
+            # If ith element is included
+            if arr[i-1] <= j:
+                dp[i][j] |= dp[i-1][j-arr[i-1]]
+
+    # Initialize difference of two sums
+    import sys
+    diff = sys.maxint
+
+    # Find the largest j such that dp[n][j]
+    # is true where j loops from sum/2 to 0
+    for j in range(theSum/2, -1, -1):
+        if dp[n][j] == True:
+            print 'j:', j
+            diff = theSum - 2*j
+            break
+
+    return diff
+
+if __name__ == "__main__":
+    arr = [3, 1, 4, 2, 2, 1]
+    print findMinDP(arr)
+    arr = [1, 6, 11, 5]
+    print findMinDP(arr)
