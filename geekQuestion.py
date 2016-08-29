@@ -1477,3 +1477,49 @@ if __name__ == "__main__":
     print findMinDP(arr)
     arr = [1, 6, 11, 5]
     print findMinDP(arr)
+
+32. Count number of ways to cover a distance
+#A naive recursive program to count number of ways to cover
+#a distance with 1, 2 and 3 steps
+def printCountRec(dist):
+
+    # Base cases
+    if dist < 0:
+        return 0
+    elif dist == 0:
+        return 1
+
+    # Recur for all previous 3 and add the results
+    return printCountRec(dist-1) + \
+           printCountRec(dist-2) + \
+           printCountRec(dist-3)
+
+#A Dynamic Programming based program to count number of ways
+#to cover a distance with 1, 2 and 3 steps
+def printCountDP(dist):
+
+    count = [None] * (dist+1)
+
+    # Initialize base values 
+    # one way to cover 0 and 1 distance
+    # two ways to cover 2 distance
+    count[0] = 1
+    count[1] = 1
+    count[2] = 2
+
+    # Fill the count array in bottom up manner
+    for i in range(3, dist+1):
+        count[i] = count[i-1] + count[i-2] + count[i-3]
+
+    return count[dist]
+
+'''
+4
+4
+149
+149
+'''
+if __name__ == "__main__":
+    for dist in [3, 9]:
+        print printCountRec(dist)
+        print printCountDP(dist)    
