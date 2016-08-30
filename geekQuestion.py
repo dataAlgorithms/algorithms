@@ -1523,3 +1523,58 @@ if __name__ == "__main__":
     for dist in [3, 9]:
         print printCountRec(dist)
         print printCountDP(dist)    
+
+33. rod cutting
+def curRod(n, pList):
+
+    N = 1000
+    pList = pList
+    rList = [-1 for _ in range(N)]
+    sList = [None] * N
+    rList[0] = 0
+
+    # naive exponential soluation
+    def curRodNv(n):
+        q = 0
+        for i in range(1, n+1):
+            q = max(q, pList[i]+curRodNv(n-i))
+
+        return  q
+
+    # bottomUp soluation that maintains not only the best
+    # price but also the required cut for such solution
+    def extendedBottomUpCutRod(n):
+        if rList[n] != -1:
+            return rList[n]
+
+        for j in range(1, n+1):
+            q = 0
+            for i in range(1, j+1):
+                if q < pList[i] + rList[j -i]:
+                    q = pList[i] + rList[j-i]
+                    sList[j] = i
+            rList[j] = q
+
+        return rList[n]
+
+    # print the extended method output
+    def printCutRodSol(n):
+        while True:
+            print sList[n]
+            
+            n -= sList[n]
+            if n <= 0:
+                break
+
+    print extendedBottomUpCutRod(n)
+    printCutRodSol(n)
+
+'''
+22
+2
+6
+'''
+if __name__ == "__main__":
+    pList = [0,1,5,8,9,10,17,17,20,24,30]
+    n = 8
+    curRod(n, pList)
