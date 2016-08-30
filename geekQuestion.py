@@ -1578,3 +1578,77 @@ if __name__ == "__main__":
     pList = [0,1,5,8,9,10,17,17,20,24,30]
     n = 8
     curRod(n, pList)
+
+34. Find the longest path in a matrix with given constraints
+# define n
+n = 3
+
+# Returns length of the longest path beginning with mList[i][j]
+# This function mainly uses lookup table dp[n][n]
+def findLongestFromACell(i, j, mList, dp):
+
+    # Base case
+    if i < 0 or i >= n or j < 0 or j >= n:
+        return 0
+
+    # If this subproblem is already solved
+    if dp[i][j] != -1:
+        return dp[i][j]
+
+    # Since all numbers are unique and in range from 1 to n*n
+    # there is atmost one possible direction from any cell
+    if j < n-1 and (mList[i][j] + 1) == mList[i][j+1]:
+        dp[i][j] = 1 + findLongestFromACell(i, j+1, mList, dp)
+        return dp[i][j]
+
+    if j > 0 and (mList[i][j] + 1) == mList[i][j-1]:
+        dp[i][j] = 1 + findLongestFromACell(i, j-1, mList, dp)
+        return dp[i][j]
+
+    if i > 0 and (mList[i][j] + 1) == mList[i-1][j]:
+        dp[i][j] = 1 + findLongestFromACell(i-1, j, mList, dp)
+        return dp[i][j]
+
+    if i < n-1 and (mList[i][j] + 1) == mList[i+1][j]:
+        dp[i][j] = 1 + findLongestFromACell(i+1, j, mList, dp)
+        return dp[i][j]
+
+    # If none of the adjacent fours is one greater
+    dp[i][j] = 1
+    return dp[i][j]
+
+# Returns length of the longest path beginning with any cell
+'''
+Given a n*n matrix where numbers all numbers are distinct and are distributed from range 1 to n2, 
+find the maximum length path (starting from any cell) such that all cells along the path are increasing order with a difference of 1.
+'''
+def finLongestOverAll(mList):
+
+    # Initialize result
+    result = 1
+
+    # Create a lookup table and fill all entries in it as -1
+    dp = [[-1] * n for _ in range(n)]
+
+    # Compute longest path beginning from all cells
+    for i in range(0, n):
+        for j in range(0, n):
+            if dp[i][j] == -1:
+                findLongestFromACell(i, j, mList, dp)
+
+            # Update result if needed
+            result = max(result, dp[i][j])
+
+    return result
+
+'''
+4
+'''
+if __name__ == "__main__":
+    mList = [[1,2,9],
+             [5,3,8],
+             [4,6,7]]
+    mList = [[3,4,5],
+             [3,2,6],
+             [2,2,1]]
+    print finLongestOverAll(mList)
