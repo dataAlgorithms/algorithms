@@ -1652,3 +1652,41 @@ if __name__ == "__main__":
              [3,2,6],
              [2,2,1]]
     print finLongestOverAll(mList)
+
+35. subsetSum
+def subsetSum(nList, target, partial=[]):
+
+    s = sum(partial)
+
+    # check if the partial sum is equals to target
+    if s == target:
+        print "sum(%s)=%s" % (partial, target)
+    if s >= target:
+        return
+
+    for i in range(len(nList)):
+        n = nList[i]
+        remaining = nList[i+1:]
+        subsetSum(remaining, target, partial+[n])
+
+'''
+sum([2, 6, -1, 1, 7])=15
+sum([2, 6, 7])=15
+sum([2, 8, 1, 4])=15
+sum([2, 9, -1, 1, 4])=15
+sum([2, 9, 4])=15
+sum([2, -1, 1, 13])=15
+sum([2, 1, 12])=15
+sum([2, 13])=15
+sum([6, 8, 1])=15
+sum([6, 9])=15
+sum([14, 1])=15
+sum([8, -1, 1, 7])=15
+sum([8, 7])=15
+sum([9, -1, 7])=15
+sum([15])=15
+sum([-1, 12, 4])=15
+sum([-1, 16])=15
+'''
+if __name__ == "__main__":
+    subsetSum([2,6,14,8,9,15,-1,1,24,12,4,20,13,7,16],15)
