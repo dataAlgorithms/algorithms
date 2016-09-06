@@ -1,9 +1,28 @@
+#1. binary search with few comparation
+def binarySearchFewComparation(theSeq, key):
+
+    n = len(theSeq)
+    l = 0
+    r = n - 1
+    while r - l > 1:
+        m = (l+r) // 2
+        if theSeq[m] <= key:
+            l = m
+        else:
+            r = m
+
+    if theSeq[l] == key:
+        return l
+    else:
+        return -1
+
 def newrange(stop):
    i = 0
    while i < stop:
        yield i
        i += 1
 
+#2. binary search using iterative way
 def binarySearchIter(theSeq, target):
 
     # get the length of theSeq
@@ -23,6 +42,7 @@ def binarySearchIter(theSeq, target):
 
     return -1
 
+#3. binary search using recursive way
 def binarySearchRec(theSeq, left, right, target):
 
 
@@ -37,9 +57,29 @@ def binarySearchRec(theSeq, left, right, target):
 
     return -1
 
-
+'''
+50
+end-start: 0.000340122672242
+50
+end-start: 0.00017676115408
+50
+end-start: 0.000118315933832
+'''
 if __name__ == "__main__":
     theSeq = [i for i in newrange(10000000)]
     target = 50
-    print binarySearchIter(theSeq, target)  
+    import time
+    start = time.clock()
+    print binarySearchIter(theSeq, target)
+    end = time.clock()
+    print 'end-start:', end-start
+
+    start = time.clock()  
     print binarySearchRec(theSeq, 0, len(theSeq)-1, target)  
+    end = time.clock()
+    print 'end-start:', end-start
+
+    start = time.clock()  
+    print binarySearchFewComparation(theSeq, target)
+    end = time.clock()
+    print 'end-start:', end-start
