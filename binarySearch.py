@@ -198,3 +198,41 @@ def findMin(arr, low, high):
 if __name__ == "__main__":
    arr = [5, 6, 1, 2, 3, 4]
    print findMin(arr, 0, len(arr)-1)
+
+'''
+7. Find a peak element using divide and conquer
+'''
+def findPeak(arr):
+
+    tmpList = []
+
+    n = len(arr)
+    
+    low = 0
+    high = n -  1
+    while low <= high:
+        mid = (low + high) // 2
+        if mid == 0 and arr[mid+1] <= arr[mid]:
+            tmpList.append(arr[mid])
+            mid += 1
+        elif arr[mid-1] <= arr[mid] and mid == n -1:
+            tmpList.append(arr[mid])
+            break
+        elif arr[mid-1] <= arr[mid] and arr[mid+1] <= arr[mid]:
+            tmpList.append(arr[mid]
+        elif mid > 0 and arr[mid-1] > arr[mid]:
+            high = mid -1
+        else:
+            low = mid + 1
+
+    if len(tmpList) != 0:
+        return tmpList
+    else:
+        return -1
+
+'''
+20
+'''
+if __name__ == "__main__":
+    arr = [10,20,15,2,23,90,67]
+    print findPeak(arr)
