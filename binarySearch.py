@@ -1,3 +1,9 @@
+def newrange(stop):
+   i = 0
+   while i < stop:
+       yield i
+       i += 1
+       
 #1. binary search with few comparation
 def binarySearchFewComparation(theSeq, key):
 
@@ -15,12 +21,6 @@ def binarySearchFewComparation(theSeq, key):
         return l
     else:
         return -1
-
-def newrange(stop):
-   i = 0
-   while i < stop:
-       yield i
-       i += 1
 
 #2. binary search using iterative way
 def binarySearchIter(theSeq, target):
