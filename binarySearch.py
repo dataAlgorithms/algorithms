@@ -162,6 +162,7 @@ if __name__ == "__main__":
 
 '''
 6. find minimum element in a sorted and rotated-array/
+   first decrease, then increase
 '''
 def findMin(arr, low, high):
 
