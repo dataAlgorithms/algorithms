@@ -326,3 +326,86 @@ if __name__ == "__main__":
     arr = [-10, -1, 0, 3, 10, 5, 6, 50, 100]
     print fixedPointLinerSearchAll(arr)
     print fixedPointBinarySearchOne(arr)
+
+'''
+10. Count the number of occurrences in a sorted array
+'''
+
+# liner search
+def occurenceSortedSeqLS(sortedList, key):
+
+    count = 0
+    flag = 0
+    for item in sortedList:
+        if item == key:
+            flag = 1
+            count += 1
+
+    if flag == 0:
+        return -1
+    else:
+        return count
+
+# binary search 
+'''
+ Use Binary search to get index of the first occurrence of x in arr[]. Let the index of the first occurrence be i.
+ Use Binary search to get index of the last occurrence of x in arr[]. Let the index of the last occurrence be j.
+ Return (j – i + 1)
+'''
+def occurenceSortedSeqBS(sortedList, key):
+
+    def first(arr, low, high, key, n):
+        if high >= low:
+            mid = (low+high) // 2
+            if (mid == 0 or key > arr[mid-1]) and arr[mid] == key:
+                return mid
+            elif key > arr[mid]:
+                return first(arr, (mid+1), high, key, n)
+            else:
+                return first(arr, low, (mid-1), key, n)
+
+        return -1
+
+    def last(arr, low, high, key, n):
+        if high >= low:
+            mid = (low+high) // 2
+            if (mid == n-1 or key < arr[mid+1]) and arr[mid] == key:
+                return mid
+            elif key < arr[mid]:
+                return last(arr, low, (mid-1), key, n)
+            else:
+                return last(arr, (mid+1), high, key, n)
+
+        return -1
+
+    # get the length
+    n = len(sortedList)
+
+    # get the index of first occurence of key
+    i = first(sortedList, 0, n-1, key, n)
+
+    if i == -1:
+        return i
+
+    # get the index of last occurence of key
+    j = last(sortedList, i, n-1, key, n)
+
+    # return count
+    return j-i+1
+
+'''
+2
+2
+4
+4
+1
+1
+-1
+-1
+'''
+if __name__ == "__main__":
+    sortedList = [1, 1, 2, 2, 2, 2, 3]
+    for key in [1, 2, 3, 4]:
+        print occurenceSortedSeqLS(sortedList, key)
+        print occurenceSortedSeqBS(sortedList, key)
+   
