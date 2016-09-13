@@ -65,3 +65,236 @@ def test_mergeSort():
 '''
 if __name__ == "__main__":
     test_mergeSort()
+
+'''
+2. LinkedList sort using merge sort
+'''
+# Implement Bag using linked list
+class LinkedList:
+    # Init
+    def __init__(self):
+        self._head = None
+        self._size = 0
+
+    # Length
+    def __len__(self):
+        return self._size
+
+    # Contain
+    def __contains__(self, target):
+        curNode = self._head
+        while curNode is not None and curNode.data != target:
+            curNode = curNode.next
+
+        return curNode is not None
+
+    # Add
+    def add(self, element):
+        newItem = LinkedListNode(element)
+        newItem.next = self._head
+        self._head = newItem
+        self._size += 1
+
+    # Remove
+    def remove(self, element):
+        preNode = None
+        curNode = self._head
+        while curNode is not None and curNode.data != element:
+            preNode = curNode
+            curNode = curNode.next
+
+        assert curNode is not None, "element is not in the Bag."
+        self._size -= 1
+
+        if curNode is self._head:
+            self._head = curNode.next
+        else:
+            preNode.next = curNode.next
+
+        return curNode.data
+
+    # Iter
+    def __iter__(self):
+        return LinkedListBagIterator(self._head)
+
+# Bag storage
+class LinkedListNode:
+    # Init
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        
+# Bag iter
+class LinkedListBagIterator:
+    # Init
+    def __init__(self, head):
+        self.curNode = head
+    def __iter__(self):
+        return self
+    def next(self):
+        if self.curNode is not None:
+            value = self.curNode.data
+            self.curNode = self.curNode.next
+            return value
+        else:
+            raise StopIteration
+        
+# Sorts a linked list using merge sort.
+# A new head reference is returned
+def llistMergeSort(theList):
+
+    # If the list is empty (base case), return None
+    if theList is None:
+        return None
+    elif theList.next is None:
+        return theList       
+
+    # Split the linked list into two sublists of equal size
+    rightList = _splitLinkedList(theList)
+    leftList = theList
+
+    #print 'rightList:', rightList
+    #print 'leftlist:', leftList 
+    
+    # Perform the same operation on the left half
+    leftList = llistMergeSort(leftList)
+
+    # ... and the right half
+    rightList = llistMergeSort(rightList)
+
+    # Merge the two ordered sublists
+    theList = _mergeLinkedLists(leftList, rightList)
+
+    # Return the head pointer of the ordered sublist
+    return theList
+
+# Splits a linked list at the midpoint to create two sublists.
+# The head reference of the right sublists is returned
+# The left sublist is still referenced by the original head reference
+def _splitLinkedList(subList):
+    
+    # Assign a reference to the first and second nodes in the list
+    midPoint = subList
+    curNode = midPoint.next
+
+    # Iterate through the list until curNode falls off the end
+    while curNode is not None:
+        #print 'curNode:', curNode
+        # Advance curNode to the next node
+        curNode = curNode.next
+
+        # If there are more nodes, advance curNode again the midPoint once
+        if curNode is not None:
+            midPoint = midPoint.next
+            curNode = curNode.next
+
+
+    # Set rightList as the head pointer to the right sublist
+    rightList = midPoint.next
+    # Unlink the right sub list from the left sublist
+    midPoint.next = None
+
+    # Return the right sub list head reference
+    return rightList
+
+def _splitLinkedListNew(source):
+
+    if source is None or source.next is None:
+        frontRef = source
+        backRef = None
+    else:
+        slow = source
+        fast = source.next
+
+        # Advance fast two nodes, slow one node
+        while fast is not None:
+            fast = fast.next
+            if fast is not None:
+                slow = slow.next
+                fast = fast.next
+
+        # slow is before the midpoint in the list, so split it in 
+        # two at that point
+        frontRef = source
+        backRef = slow.next
+        slow.next = None
+
+    return frontRef, backRef
+
+# Merges two sorted linked ist:
+# return head reference for the new list
+def _mergeLinkedLists(subListA, subListB):
+    if subListA is None:
+        return subListB 
+    elif subListB is None:
+        return subListA
+    
+    # Create a dummy node and insert it at the front of the list
+    newList = LinkedListNode(None) 
+
+    newTail = newList
+
+    # Append nodes to the new list until one list is empty
+    while subListA is not None and subListB is not None:
+        if subListA.data <= subListB.data:
+            newTail.next = subListA
+            subListA = subListA.next
+        else:
+            newTail.next = subListB
+            subListB = subListB.next
+        
+        newTail = newTail.next
+        newTail.next = None
+
+    # If self list contains more terms, append them
+    if subListA is not None:
+        newTail.next = subListA
+    else:
+        newTail.next = subListB
+
+    # Return the new merged list, which begins with the first node after
+    # the dummy node
+    return newList.next
+
+def _mergeLinkedListsNew(subListA, subListB):
+    result = LinkedListNode(None)
+ 
+    if subListA is None:
+        return subListB 
+    elif subListB is None:
+        return subListA
+
+    if subListA.data <= subListB.data:
+        result = subListA
+        result.next = _mergeLinkedLists(subListA.next, subListB)
+    else:
+        result = subListB
+        result.next = _mergeLinkedLists(subListA, subListB.next)
+
+    return result
+
+'''
+...Sort before
+ECON-111 HIST-350 ECON-101 HIST-340 MATH-121 CSCI-112 
+
+...Sort after
+CSCI-112 ECON-101 ECON-111 HIST-340 HIST-350 MATH-121
+'''    
+if __name__ == "__main__":
+    smith = LinkedList()
+    smith.add('CSCI-112')
+    smith.add('MATH-121')
+    smith.add('HIST-340')
+    smith.add('ECON-101')
+    smith.add('HIST-350')
+    smith.add('ECON-111')
+    
+    print '...Sort before'
+    for item in smith:
+        print item,
+        
+    smith = llistMergeSort(smith._head)
+    print '\r\r...Sort after'
+    while smith is not None:
+        print smith.data,
+        smith = smith.next
