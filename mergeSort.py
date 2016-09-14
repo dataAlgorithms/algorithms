@@ -298,3 +298,96 @@ if __name__ == "__main__":
     while smith is not None:
         print smith.data,
         smith = smith.next
+        
+'''
+3. Count Inversions in an array 
+'''
+def getInvCountNV(arr):
+    '''
+    Use native way to get inverse count
+    '''
+    
+    n = len(arr)
+    inv_count = 0
+    for i in range(0, n-1):
+        for j in range(i+1, n):
+            if arr[i] > arr[j]:
+                inv_count += 1
+
+    return inv_count
+
+'''
+This function sorts the input array and returns the 
+number of inversions in the array
+'''
+def mergeSort(arr):
+
+    n = len(arr)
+    temp = [0] * n
+    return _mergeSort(arr, temp, 0, n-1)
+
+'''
+An anxiliary recursive function that sorts the input array and
+returns the number of inversions in the array
+'''
+def _mergeSort(arr, temp, left, right):
+
+    inv_count = 0
+    if right > left:
+        mid = (left + right) // 2
+
+        inv_count = _mergeSort(arr, temp, left, mid)
+        inv_count += _mergeSort(arr, temp, mid+1, right)
+
+        inv_count += merge(arr, temp, left, mid+1, right)
+
+    print 'right:', right
+    print 'left:', left 
+
+    return inv_count
+
+'''
+Merges two sorted arrays and returns inversion count in the array
+'''
+def merge(arr, temp, left, mid, right):
+    inv_count = 0
+
+    i = left
+    j = mid
+    k = left
+    while (i <= mid -1) and (j <= right):
+        if arr[i] <= arr[j]:
+            temp[k] = arr[i]
+            k += 1
+            i += 1
+        else:
+            temp[k] = arr[j]
+            k += 1
+            j += 1
+
+            inv_count = inv_count + (mid -i)
+
+    # Copy the remaining elements of left subarray
+    while i <= mid -1:
+        temp[k] = arr[i]
+        k += 1
+        i += 1
+
+    # Copy the remaining elementsof right subarray
+    while j <= right:
+        temp[k] = arr[j]
+        k += 1
+        j += 1
+
+    # Copy merged elements to original array
+    for i in range(left, right+1):
+        arr[i] = temp[i]
+
+    return inv_count
+
+'''
+5
+'''
+if __name__ == "__main__":
+    arr = [1, 20, 6, 4, 5]
+    print mergeSort(arr)
