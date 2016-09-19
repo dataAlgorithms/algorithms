@@ -139,3 +139,153 @@ if __name__ == "__main__":
     sortK(arr, k)
 
     print arr
+
+'''
+3. Find k smallest element in the array
+'''
+# left child
+def leftChild(i):
+
+    return 2*i + 1
+
+# right child
+def rightChild(i):
+   
+    return 2*i + 2
+
+# swap elements
+def swapElements(a, i, j):
+
+    a[i], a[j] = a[j], a[i]
+
+# heapify min
+def heapify(a, i, len_):
+
+    largest = i
+
+    left = leftChild(i)
+    right = rightChild(i)
+
+    if left <= len_ and a[largest] < a[left]:
+        largest = left
+
+    if right <= len_ and a[largest] < a[right]:
+        largest = right
+
+    if largest != i:
+        swapElements(a, i, largest)
+        heapify(a, largest, len_)
+        
+# create a min heap
+def buildHeap(a, len_):
+
+    i = len_/2 + 1
+    while i >= 0:
+        heapify(a, i, len_)
+        i -= 1
+
+# insert item into heap
+def insertInHeap(a, K, element):
+    a[0] = element
+    heapify(a, 0, K)
+
+# find k small elements
+def kSmallElement(a, K):
+
+    N = len(a)
+    minHeap = [0] * K
+
+    # Copy first K elements in another array
+    for i in range(0, K):
+        minHeap[i] = a[i]
+
+    # Build max heap with those entered elements
+    buildHeap(minHeap, K-1)
+
+    for i in range(K, N):
+        # If this number if less than root of max heap, insert it
+        if a[i] <= minHeap[0]:
+            insertInHeap(minHeap, K-1, a[i])
+
+    return minHeap
+
+'''
+[7, 7, 15, 15, 16, 1, 11, 12, 17, 2, 6, 9, 12, 12, 18, 17, 13, 14, 15, 15, 11, 16, 7, 18, 8, 6, 12, 3, 18, 14]
+[2, 1]
+'''
+if __name__ == "__main__":
+    import random 
+    a = [random.randrange(20) for _ in range(30)]
+    K = 2
+    print a
+    print kSmallElement(a, K)
+    
+'''
+4. Find k largest element in a array
+'''
+#! coding=utf-8
+'''
+In min heap method we will create a min heap of size k which will store the k largest element. 
+Initially we will create this min heap using the first k element of the given array say ��arr��. 
+
+After creating min heap with first k element we will traverse rest of the given array i.e. 
+from arr k+1 to n. As we have a min heap, smallest element of all the K largest element will be at the root. 
+Now we will compare each element starting from the arr k+1 with the root of the min heap and if it is greater 
+than root then we will replace the root with that element and call heapify on the root. This way we will get largest k element in the min heap.
+'''
+def heapify(res, k, i):
+
+    smallest = i
+    l = 2*i + 1
+    r = 2*i + 2
+
+    if l < k and res[l] < res[smallest]:
+        smallest = l
+
+    if r < k and res[r] < res[smallest]:
+        smallest = r
+
+    if smallest != i:
+        res[smallest], res[i] = res[i], res[smallest]
+
+        heapify(res, k, smallest)
+
+def findklargest(arr, res, n, k):
+
+    # Copy the first k element into res array
+    for i in range(0, k):
+        res[i] = arr[i]
+
+    # Build heap of the res array
+    # by calling heapify on every parent node
+    for i in range(k/2-1, -1, -1):
+        heapify(res, k, i)
+
+    # Check whether any element present in arr is
+    # greater than the smallest element(root) of all the element
+    # present in min heap
+    for i in range(k, n):
+        # If any element is greater then replace the root 
+        # with this element
+        if arr[i] > res[0]:
+            res[0] = arr[i]
+            heapify(res, k, 0)
+
+    # now sort the min heap to get result 
+    for i in range(k-1, -1, -1):
+        res[0], res[i] = res[i], res[0]
+
+'''
+[36, 55, 52, 91, 59, 73, 54, 65, 52, 33]
+[91, 73]
+'''
+if __name__ == "__main__":
+    import random 
+    arr = [random.randrange(100) for _ in range(10)]
+    n = len(arr)
+    k = 2
+    res = [0] * k
+
+    findklargest(arr, res, n, k)
+    print arr
+    print res
