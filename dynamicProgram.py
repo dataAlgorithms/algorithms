@@ -98,3 +98,84 @@ if __name__ == "__main__":
                    [1, 2, 3, 6, 7, 1, 8, 6, 2, 7, 7, 1],
                    [1, 2, 3, 20, 2, 10, 1]]:
         print findMinSum(theSeq)
+
+'''
+2. Given a string, find count of distinct subsequences of it
+
+Examples:
+
+Input  : str = "gfg"
+Output : 7
+The seven distinct subsequences are "", "g", "f",
+"gf", "fg", "gg" and "gfg"
+
+Input  : str = "ggg"
+Output : 4
+The six distinct subsequences are "", "g", "gg"
+and "ggg"
+
+Let countSub(n) be count of subsequences of
+first n characters in input string. We can
+recursively write it as below.
+
+countSub(n) = 2*Count(n-1) - Repetition
+
+If current character, i.e., str[n-1] of str has
+not appeared before, then
+   Repetition = 0
+
+Else:
+   Repetition  =  Count(m)
+   Here m is index of previous occurrence of
+   current character. We basically remove all
+   counts ending with previous occurrence of
+   current character.
+
+Since above recurrence has overlapping subproblems, 
+we can solve it using Dynamic Programming
+'''
+
+MAX_CHAR = 256
+
+# Returns count of distinct subsequence of str
+def countSub(aStr):
+
+    # Create an array to store index of last
+    last = [-1] * MAX_CHAR
+
+    # Length of string
+    n = len(aStr)
+
+    # dp[i] is going to store count of distinct
+    # subsequences of length i
+    dp = [0] * (n+1)
+
+    # Empty substring has only one subsequence
+    dp[0] = 1
+
+    # Traverse through all lengths from 1 to n
+    for i in range(1, n+1):
+        # Number of subsequences with substring aStr[0..i-1]
+        dp[i] = 2*dp[i-1]
+
+        # If current character has appeared
+        # before, then remove all subsequences
+        # ending with previous occurrence
+        if last[ord(aStr[i-1])] != -1:
+            dp[i] = dp[i] - dp[last[ord(aStr[i-1])]]
+
+        # Mark occurence of current character
+        last[ord(aStr[i-1])] = i - 1
+
+    return dp[n]
+
+'''
+7
+4
+2
+128
+496
+'''
+if __name__ == "__main__":
+    for aStr in ["gfg", "ggg", "o", "ABCDEFG", "CODECRAFT"]:
+        print countSub(aStr)
