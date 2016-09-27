@@ -179,3 +179,84 @@ def countSub(aStr):
 if __name__ == "__main__":
     for aStr in ["gfg", "ggg", "o", "ABCDEFG", "CODECRAFT"]:
         print countSub(aStr)
+
+'''
+3. Count digit groupings of a number with given constraints
+We are given a string consisting of digits, we may group these digits into sub-groups
+(but maintaining their original order). The task is to count number of groupings such that for every sub-group except the last one,
+sum of digits in a sub-group is less than or equal to sum of the digits in the sub-group immediately on its right.
+
+For example, a valid grouping of digits of number 1119 is (1-11-9). Sum of digits in first subgroup is 1, next subgroup is 2,
+and last subgroup is 9. Sum of every subgroup is less than or equal to its immediate right.
+
+Input : "1119"
+Output: 7
+Sub-groups: [1-119], [1-1-19], [1-11-9], [1-1-1-9],
+            [11-19] and [111-9].
+Note : Here we have included [1119] in the group and
+       sum of digits is 12 and this group has no
+       immediate right.
+
+Input : "1234"
+Output: 6
+Sub-groups : [1234], [1-234], [12-34], [1-2-3-4],
+             [12-3-4] and [1-2-34]
+
+The maximum sum of digits can be 9*length where ‘length’ is length of input num.
+Create a 2D array int dp[MAX][9*MAX] where MAX is maximum possible length of input numebr.
+A value dp[position][previous] is going to store result for ‘position’ and ‘previous_sum’.
+If current subproblem has been evaluated i.e; dp[position][previous_sum] != -1,
+then use this result, else recursively compute its value.
+If by including the current position digit in sum i.e; sum = sum + num[position]-‘0′,
+sum becomes greater than equal to previous sum, then increment the result and call the problem for next position in the num.
+If position == length, then we have been traversed current subgroup successfully and we return 1;
+'''
+
+MAX = 40
+
+# Function to find the count of splits with given condition
+def countGroups(position, previous_sum, length, numList):
+
+    # Terminating condition
+    if position == length:
+        return 1
+
+    # If already evaluated for a given sub problem then return the value
+    if dp[position][previous_sum] != -1:
+        return dp[position][previous_sum]
+
+    # countGroups for current sub-group is 0
+    dp[position][previous_sum] = 0
+
+    res = 0
+    theSum = 0
+
+    # traverse all digits from current position to rest
+    # of the length of string
+    for i in range(position, length):
+        theSum += int(numList[i]) 
+
+        # if forward_sum is greater than the previous sum
+        # then call the method again
+        if theSum >= previous_sum:
+            # note: we pass current sum as previous sum
+            res += countGroups(i+1, theSum, length, numList)
+
+    dp[position][previous_sum] = res
+
+    # total number of subgroups till current position
+    return res
+
+'''
+7
+6
+'''
+if __name__ == "__main__":
+    for numList in ["1119", "1234"]:
+        length = len(numList)
+
+        # A memoization table to store results of subproblems
+        # length of string is 40 and maximum sum will be 9*40
+        dp = [[-1] * (9*MAX+1) for _ in range(MAX)]
+
+        print countGroups(0, 0, length, numList)
