@@ -1769,3 +1769,84 @@ def knapsack(items, maxweight):
 if __name__ == "__main__":
     items = [(4, 12), (2, 1), (6, 4), (1, 1), (2, 2)]
     print knapsack(items, 15)
+
+    '''
+37. Minimum Initial Energy Required To Cross Street
+Given an array containing positive and negative numbers.
+The array represents checkpoints from one end to other end of street.
+Positive and negative values represent amount of energy at that checkpoint.
+Positive numbers increase the energy and negative numbers decrease.
+Find the minimum initial energy required to cross the street such that Energy level never becomes 0 or less than 0.
+
+Note : The value of minimum initial energy required will be 1 even
+if we cross street successfully without loosing energy to less than and equal to 0 at any checkpoint.
+The 1 is required for initial check point.
+
+Examples:
+
+Input : arr[] = {4, -10, 4, 4, 4}
+Output: 7
+Suppose initially we have energy = 0, now at 1st
+checkpoint, we get 4. At 2nd checkpoint, energy gets
+reduced by -10 so we have 4 + (-10) = -6 but at any
+checkpoint value of energy can not less than equals
+to 0. So initial energy must be at least 7 because
+having 7 as initial energy value at 1st checkpoint
+our energy will be = 7+4 = 11 and then we can cross
+2nd checkpoint successfully. Now after 2nd checkpoint,
+all checkpoint have positive value so we can cross
+street successfully with 7 initial energy.
+
+Input : arr[] = {3, 5, 2, 6, 1}
+Output: 1
+We need at least 1 initial energy to reach first
+checkpoint
+
+Input : arr[] = {-1, -5, -9}
+Output: 16
+We take initial minimum energy 0 i.e; initMinEnergy = 0 and energy at any checkpoint as currEnergy = 0.
+Now traverse each checkpoint linearly and add energy level at each i’th checkpoint i.e; currEnergy = currEnergy + arr[i].
+If currEnergy becomes non-positive, then we need at least “abs(currEnergy) + 1″ extra initial energy to cross this point. 
+Therefore we update initMinEnergy = (initMinEnergy + abs(currEnergy) + 1). 
+We also update currEnergy = 1 as we now have the required extra minimum initial energy for next point.
+'''
+def minInitialEnery(arr):
+
+    # get the length
+    n = len(arr)
+
+    # initMinEnergy is variable to store minimum inital 
+    # energy required
+    initMinEnergy = 0
+
+    # currEnergy is variable to store current value of 
+    # energe at ith checkpoint on street
+    currEnergy = 0
+
+    # flag to check if we have successfully crossed the 
+    # street without any energy loss <= 0 at any checkpoint
+    flag = 0
+
+    # Traverse each check point linerally
+    for i in range(0, n):
+        currEnergy += arr[i]
+
+        # If current energy, becomes negative or 0, increment
+        # initial mimimum energy by the negative value plus 1
+        # to keep current energy positive (at least 1)
+        # Also update current energy and flag
+        if currEnergy <= 0:
+            initMinEnergy += abs(currEnergy) + 1
+            currEnergy = 1
+            flag = 1
+
+    # If energy never became nagative or 0, then return 1
+    # Else return computed initMinEnergy
+    if flag == 0:
+        return 1
+    else:
+        return initMinEnergy
+
+if __name__ == "__main__":
+    for arr in [[4, -10, 4, 4, 4], [3, 5, 2, 6, 1], [-1, -5, -9]]:
+        print minInitialEnery(arr)
