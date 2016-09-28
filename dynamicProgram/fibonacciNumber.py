@@ -40,16 +40,67 @@ def fib_tabu(n):
         f[i] = f[i-1] + f[i-2]
 
     return f[n]
-    
+
+'''
+Use simple recursive program!
+-1
+Seconds: 0.0
+0
+Seconds: 0.0
+1
+Seconds: 0.0
+1
+Seconds: 0.0
+21
+Seconds: 0.0
+832040
+Seconds: 0.286000013351
+
+Use memoization of dynamic programing
+-1
+Seconds: 0.0
+0
+Seconds: 0.0
+1
+Seconds: 0.0
+1
+Seconds: 0.0
+21
+Seconds: 0.0
+832040
+Seconds: 0.0
+
+Use tabulation of dynamic programing!
+-1
+Seconds: 0.0
+0
+Seconds: 0.000999927520752
+1
+Seconds: 0.0
+1
+Seconds: 0.0
+21
+Seconds: 0.0
+832040
+Seconds: 0.0
+'''
 if __name__ == "__main__":
+    import time
+
     print 'Use simple recursive program!'
-    for n in [-1, 0, 1, 2, 8, 64]:
+    for n in [-1, 0, 1, 2, 8, 30]:
+        starttime = time.time()
         print fib_recursive(n)
+        print 'Seconds:', time.time() - starttime
 
     print '\nUse memoization of dynamic programing!'
-    for n in [-1, 0, 1, 2, 8, 64]:
-        print fib_memo(n)    
+    for n in [-1, 0, 1, 2, 8, 30]:
+        starttime = time.time()
+        print fib_memo(n)
+        print 'Seconds:', time.time() - starttime
 
     print '\nUse tabulation of dynamic programing!'
-    for n in [-1, 0, 1, 2, 8, 64]:
-        print fib_tabu(n)    
+    for n in [-1, 0, 1, 2, 8, 30]:
+        starttime = time.time()
+        print fib_tabu(n)
+        print 'Seconds:', time.time() - starttime
