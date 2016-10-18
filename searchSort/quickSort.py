@@ -136,3 +136,97 @@ if __name__ == "__main__":
     print 'cList (optimize sorted before):', cList
     quickSort(cList)
     print 'cList (optimize sorted after):', cList       
+
+    '''
+4. Iterative quick sort
+The above implementation can be optimized in many ways
+1) The above implementation uses last index as pivot. This causes worst-case behavior on already sorted arrays, 
+which is a commonly occurring case. The problem can be solved by choosing either a random index for the pivot, 
+or choosing the middle index of the partition or choosing the median of the first, 
+middle and last element of the partition for the pivot. (See this for details)
+
+2) To reduce the recursion depth, recur first for the smaller half of the array, 
+and use a tail call to recurse into the other.
+
+3) Insertion sort works better for small subarrays. Insertion sort can be used for invocations on such small arrays 
+(i.e. where the length is less than a threshold t determined experimentally). For example, 
+this library implementation of qsort uses insertion sort below size 7.
+
+Despite above optimizations, the function remains recursive and uses function call stack to 
+store intermediate values of l and h. The function call stack stores other bookkeeping information 
+together with parameters. Also, function calls involve overheads like storing activation record 
+of the caller function and then resuming execution.
+
+The above function can be easily converted to iterative version with the help of an auxiliary stack. 
+'''
+# The function is the same in both iterative and recursive
+def partition(arr, l, h):
+    i = (l - 1)
+    x = arr[h]
+
+    for j in range(l, h):
+        if arr[j] <= x:
+            # increment index of smaller element
+            i = i + 1
+            arr[i], arr[j] = arr[j], arr[i]
+
+    arr[i+1],arr[h] = arr[h], arr[i+1]
+    return i+1
+
+# Function to do quick sort
+# arr[] ..array to be sorted
+# l .. starting index
+# h .. ending index
+def quickSortIterative(arr, l, h):
+
+    # Create an auxiliary stack
+    size = h -l + 1
+    stack = [0] * size
+
+    # initialize top of stack
+    top = -1
+
+    # push initial values of l and h to stack
+    top = top + 1
+    stack[top] = l
+    top = top + 1
+    stack[top] = h
+
+    # keep popping from stack while is not empty
+    while top >= 0:
+
+        # Pop h and l
+        h = stack[top]
+        top = top - 1
+        l = stack[top]
+        top = top - 1
+
+        # Set pivot element at its correct position in 
+        # sorted array
+        p = partition(arr, l, h)
+
+        # If there are elements on left side of pivot
+        # then push left side to stack
+        if p-1 > l:
+            top = top + 1
+            stack[top] = l
+            top = top + 1
+            stack[top] = p - 1
+
+        # If there are elements on right side of pivot
+        # then push right side to stack
+        if p+1 < h:
+            top = top + 1
+            stack[top] = p + 1
+            top = top + 1
+            stack[top] = h
+
+'''
+Sorted array is: [1, 2, 2, 3, 3, 3, 4, 5]
+Sorted array is: [-1, 2, 3, 4]
+'''
+if __name__ == "__main__":
+    for arr in [[4, 3, 5, 2, 1, 3, 2, 3], [2, -1, 3, 4]]:
+        n = len(arr)
+        quickSortIterative(arr, 0, n-1)
+        print "Sorted array is:", arr
