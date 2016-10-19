@@ -66,6 +66,9 @@ def printKclosest(arr, x, k, n):
         r += 1
         count += 1
 
+'''
+39 30 42 45
+'''
 if __name__ == "__main__":
     arr = [12, 16, 22, 30, 35, 39, 42, 45, 48, 50, 53, 55, 56]
     n  = len(arr)
