@@ -427,3 +427,174 @@ if __name__ == "__main__":
     while newsmith is not None:
         print newsmith.data,
         newsmith = newsmith.next
+
+#! coding=utf-8 
+
+'''
+6. quickSort for double linked list
+'''
+
+'''
+Considers last element as pivot, places the pivot element at its
+correct position in sorted array, and places all smaller (smaller than
+pivot) to left of pivot and all greater elements to right of pivot
+'''
+def partition(l, h):
+
+    # Set pivot as h element
+    x = h.data
+
+    # Similar to i = l-1 for array implementation
+    i = l.prev
+
+    j = l
+    while j != h:
+        if j.data <= x:
+            if i is None:
+                i = l
+            else:
+                i = i.next
+
+            i.data, j.data = j.data, i.data
+        j = j.next
+
+    if i is None:
+        i = l
+    else:
+        i = i.next
+    
+    i.data, h.data = h.data, i.data
+    return i
+
+# A recursive implementation of quicksort for linked list
+def _quickSort(l, h):
+
+    if h is not None and l != h and l != h.next:
+        p = partition(l, h)
+        _quickSort(l, p.prev)
+        _quickSort(p.next, h)
+
+# main function to sort a linked list
+def quickSort(head):
+
+    # Find last node
+    h = lastNode(head)
+
+    # Call the recursive QuickSort
+    _quickSort(head, h)
+
+# find last node of linked list
+def lastNode(root):
+
+    while root is not None and root.next is not None:
+        root = root.next
+    return root
+
+class DoubleSortedLinkedList:
+    # Init
+    def __init__(self):
+        self._head = None
+        self._tail = None
+        self._size = 0
+    # Length
+    def __len__(self):
+        return self._size
+    # IsEmpty
+    def isEmpty(self):
+        return self._size == 0
+    # Contains
+    def __contains__(self, item):
+        if self._head is None:
+            return False
+        else:
+            curNode = self._head
+            while curNode is not None and curNode.value != item:
+                curNode = curNode.next
+            if curNode is None:
+                return False
+            else:
+                return curNode.value == item 
+        
+    # Add
+    def add(self, item):
+        newnode = _DLinkListNode(item)
+        if self._head is None:
+            self._head = newnode
+            self._tail = newnode
+
+        else:
+
+            newnode.prev = self._tail
+            newnode.next = None
+            self._tail.next = newnode
+            self._tail = newnode
+
+        self._size += 1
+    # Remove
+    def remove(self, item):
+        assert item in self, "item is not in"
+        if self._head is None:
+            return False
+        elif item == self._head.value:
+            self._head = self._head.next
+        elif item == self._tail.value:
+            self._tail = self._tail.prev
+        else:
+            curNode = self._head
+            while curNode is not None and curNode.value != item:
+                curNode = curNode.next
+            curNode.next.prev = curNode.prev
+            curNode.prev.next = curNode.next
+        self._size -= 1
+    # Iter
+    def __iter__(self):
+        return _DLinkListIter(self._head)
+
+# Double Linked list Iter
+class _DLinkListIter:
+    # Init
+    def __init__(self, head):
+        self._curNode = head
+    def __iter__(self):
+        return self
+    def next(self):
+        if self._curNode != None:
+            value = self._curNode.data
+            self._curNode = self._curNode.next
+            return value
+        raise StopIteration
+
+# Double Linked list node
+class _DLinkListNode:
+    # Init
+    def __init__(self, value):
+        self.data = value
+        self.next = None
+        self.prev = None
+
+'''
+::primary smith:
+MATH-121 CSCI-112 HIST-340 ECON-101 
+
+::sorted smith:
+CSCI-112 ECON-101 HIST-340 MATH-121
+'''
+if __name__ == "__main__":
+    
+    # init a linkedlist named smith
+    smith = DoubleSortedLinkedList()
+    smith.add('MATH-121')
+    smith.add('CSCI-112')
+    smith.add('HIST-340')
+    smith.add('ECON-101')
+    
+    # print smith
+    print '::primary smith:'
+    for item in smith:
+        print item,
+
+    print '\n'
+    print '::sorted smith:'
+    quickSort(smith._head)
+    for item in smith:
+        print item,
