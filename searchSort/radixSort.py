@@ -2,6 +2,7 @@
 
 '''
 1. radix sort
+Sort n numbers in range from 0 to n^2 – 1 in linear time
 '''
 def radixSort(a, radix=10, debug=0):
 
