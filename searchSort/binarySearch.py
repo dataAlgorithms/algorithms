@@ -595,3 +595,37 @@ if __name__ == "__main__":
     arr = [1, 30, 40, 50, 60, 70, 23, 20]
     print findMaximumLS(arr)
     print findMaximumBS(arr)
+
+'''
+13, binarySearch that avoid overflow for (low+high)//2
+'''
+def binarySearchOverflow(theSeq, target):
+
+    # get the length of theSeq
+    n = len(theSeq)
+
+    # loop
+    low = 0
+    high = n - 1
+    while low <= high:
+        #mid = (low+high) // 2
+        if low % 2 == 1 and high % 2 == 1:
+            mid = low // 2 + high // 2 + 1
+        else:
+            mid = low // 2 + high // 2
+        if target == theSeq[mid]:
+            return mid
+        elif target < theSeq[mid]:
+            high = mid-1
+        else:
+            low = mid+1
+
+    return -1
+   
+'''
+5
+''' 
+if __name__ == "__main__":
+    target = 5
+    theSeq = range(10)
+    print binarySearchOverflow(theSeq, target)
