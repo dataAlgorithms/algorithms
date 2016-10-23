@@ -1,3 +1,24 @@
+'''
+Method 1 (Simple Solution) 
+A Simple Solution is to sort the given array using a O(nlogn) sorting algorithm like Merge Sort, Heap Sort, etc and return the element at index k-1 in the sorted array. Time Complexity of this solution is O(nLogn).
+'''
+def kthSmallest(theSeq, k):
+
+    # Sort the sequence
+    theSeq = sorted(theSeq)
+
+    # Print the kth element
+    print theSeq[k-1]
+
+'''
+7
+3
+'''
+if __name__ == "__main__":
+
+    for theSeq in [[12, 3, 5, 7, 19], [1,2,3,4,5]]:
+        kthSmallest(theSeq, 3)
+
 # This function returns kth smallest element in distinct arr[l..r]
 # using quickSort based method,
 # Assumption: elements in arr[] are distinct
