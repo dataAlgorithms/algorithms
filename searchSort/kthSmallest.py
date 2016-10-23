@@ -19,6 +19,103 @@ if __name__ == "__main__":
     for theSeq in [[12, 3, 5, 7, 19], [1,2,3,4,5]]:
         kthSmallest(theSeq, 3)
 
+        #! coding=utf-8
+
+'''
+Method 2 (Using Min Heap HeapSelect)
+We can find kth smallest element in time complexity better than O(nLogn).
+A simple optomization is to create a Min Heap of the given n elements and call extractMin() k times.
+'''
+class MinHeap:
+    def __init__(self, aList, size):
+        self.harr = aList
+        self.capacity = size
+        self.heap_size = size
+
+        i = (self.heap_size -1) // 2
+        while i >= 0:
+            self.MinHeapify(i)
+            i -= 1
+
+    def parent(self, i):
+        return (i-1) // 2
+
+    def left(self, i):
+        return (2*i + 1)
+
+    def right(self, i):
+        return 2*i+2
+
+    def getMin(self):
+        return self.harr[0]
+
+    # remove minimum element (or root) from min heap
+    def extractMin(self):
+        if self.heap_size == 0:
+            return -1
+
+        # Store the mimimum value
+        root = self.harr[0]
+
+        # If there are more than 1 items, move the last item to root
+        # and call heapify
+        if self.heap_size > 1:
+            self.harr[0] = self.harr[self.heap_size-1]
+            self.MinHeapify(0)
+
+        self.heap_size -= 1
+
+        return root
+
+    # A recursive method to heapify a subtree with root at given index
+    # This method assumes that the subtrees are already heapified
+    def MinHeapify(self, i):
+        l = self.left(i)
+        r = self.right(i)
+        smallest = i
+        if l < self.heap_size and self.harr[l] < self.harr[i]:
+            smallest = l
+        if r < self.heap_size and self.harr[r] < self.harr[smallest]:
+            smallest = r
+
+        if smallest != i:
+            self.harr[i],self.harr[smallest] = self.harr[smallest],self.harr[i]
+            self.MinHeapify(smallest)
+
+# kth Smallest element in a given array
+def kthSmallest(arr, k):
+
+    # Build a heap of n elements
+    mh = MinHeap(arr, len(arr))
+
+    # Do extract min (k-1) times
+    for _ in range(0, k-1):
+        mh.extractMin()
+
+    # Return root
+    return mh.getMin()
+
+'''
+5
+7
+10
+'''
+if __name__ == "__main__":
+    arr = [12, 3, 5, 7, 19]
+    n = len(arr)
+    k = 2
+    print kthSmallest(arr, k)    
+    
+    arr = [7, 10, 4, 3, 20, 15]
+    n = len(arr)
+    k = 3
+    print kthSmallest(arr, k)  
+    
+    arr = [7, 10, 4, 3, 20, 15]
+    n = len(arr)
+    k = 4
+    print kthSmallest(arr, k)   
+    
 # This function returns kth smallest element in distinct arr[l..r]
 # using quickSort based method,
 # Assumption: elements in arr[] are distinct
