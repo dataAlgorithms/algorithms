@@ -207,16 +207,18 @@ def kSmallElement(a, K):
         if a[i] <= minHeap[0]:
             insertInHeap(minHeap, K-1, a[i])
 
-    return minHeap
+    return minHeap[0]
 
 '''
-[7, 7, 15, 15, 16, 1, 11, 12, 17, 2, 6, 9, 12, 12, 18, 17, 13, 14, 15, 15, 11, 16, 7, 18, 8, 6, 12, 3, 18, 14]
-[2, 1]
+[56, 32, 20, 36, 4, 7, 26, 22, 38, 13, 9, 25, 53, 21, 49, 27, 47, 29, 35, 45]
+13
 '''
 if __name__ == "__main__":
-    import random 
-    a = [random.randrange(20) for _ in range(30)]
-    K = 2
+    import random
+    lottery_numbers = range(60)
+    winning_numbers = random.sample(lottery_numbers, 20)
+    a = winning_numbers 
+    K = 4
     print a
     print kSmallElement(a, K)
     
