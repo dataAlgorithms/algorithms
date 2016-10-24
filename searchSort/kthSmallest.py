@@ -116,6 +116,116 @@ if __name__ == "__main__":
     k = 4
     print kthSmallest(arr, k)   
     
+#! coding=utf-8
+
+'''
+Method 3 (Using Max-Heap)
+We can also use Max Heap for finding the k��th smallest element. Following is algorithm.
+1) Build a Max-Heap MH of the first k elements (arr[0] to arr[k-1]) of the given array. O(k)
+
+2) For each element, after the k��th element (arr[k] to arr[n-1]), compare it with root of MH.
+����a) If the element is less than the root then make it root and call heapify for MH
+����b) Else ignore it.
+// The step 2 is O((n-k)*logk)
+
+3) Finally, root of the MH is the kth smallest element.
+
+Time complexity of this solution is O(k + (n-k)*Logk)
+'''
+class MaxHeap:
+    def __init__(self, aList, size):
+        self.harr = aList
+        self.heap_size = size
+        i = (self.heap_size-1) // 2
+        while i >= 0:
+            self.maxHeapify(i)
+            i -= 1
+
+    def parent(self, i):
+        return (i-1) / 2
+
+    def left(self,  i):
+        return 2*i + 1
+
+    def right(self, i):
+        return 2*i + 2
+
+    def getMax(self):
+        return self.harr[0]
+
+    def replaceMax(self, x):
+        self.harr[0] = x
+        self.maxHeapify(0)
+
+    # remove maximum element (or root) from max heap
+    def extractMax(self):
+        if self.heap_size == 0:
+            return -1
+
+        # Store the maximum value
+        root = self.harr[0]
+
+        # If there are more than 1 items, move the last item
+        # to root and call heapify
+        if self.heap_size > 1:
+            self.harr[0] = self.harr[self.heap_size -1]
+            self.maxHeapify(0)
+
+        self.heap_size -= 1
+
+        return root
+
+    # A recursive method to heapify a subtree with root at given index
+    # This method assumes that the subtrees are already heapified
+    def maxHeapify(self,  i):
+        l = self.left(i)
+        r = self.right(i)
+        largest = i
+        if l < self.heap_size and self.harr[l] > self.harr[i]:
+            largest = l
+        if r < self.heap_size and self.harr[r] > self.harr[largest]:
+            largest = r
+        if largest != i:
+            self.harr[i],self.harr[largest] = self.harr[largest],self.harr[i]
+            self.maxHeapify(largest)
+
+# Function to return kth largest element in a given array
+def kthSmallest(arr, k):
+
+    # Build a heap of first k elements: O(k) time
+    mh = MaxHeap(arr, k)
+
+    # Process remaining n-k elements, If current element is 
+    # smaller than root, replace root with current element
+    n = len(arr)
+    for i in range(k, n):
+        if arr[i] < mh.getMax():
+            mh.replaceMax(arr[i])
+
+    # Return root
+    return mh.getMax()
+
+'''
+5
+7
+10
+'''
+if __name__ == "__main__":
+    arr = [12, 3, 5, 7, 19]
+    n = len(arr)
+    k = 2
+    print kthSmallest(arr, k)    
+    
+    arr = [7, 10, 4, 3, 20, 15]
+    n = len(arr)
+    k = 3
+    print kthSmallest(arr, k)  
+    
+    arr = [7, 10, 4, 3, 20, 15]
+    n = len(arr)
+    k = 4
+    print kthSmallest(arr, k)   
+    
 # This function returns kth smallest element in distinct arr[l..r]
 # using quickSort based method,
 # Assumption: elements in arr[] are distinct
