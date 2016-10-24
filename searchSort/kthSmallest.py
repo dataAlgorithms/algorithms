@@ -120,12 +120,12 @@ if __name__ == "__main__":
 
 '''
 Method 3 (Using Max-Heap)
-We can also use Max Heap for finding the k��th smallest element. Following is algorithm.
+We can also use Max Heap for finding the kth smallest element. Following is algorithm.
 1) Build a Max-Heap MH of the first k elements (arr[0] to arr[k-1]) of the given array. O(k)
 
-2) For each element, after the k��th element (arr[k] to arr[n-1]), compare it with root of MH.
-����a) If the element is less than the root then make it root and call heapify for MH
-����b) Else ignore it.
+2) For each element, after the kth element (arr[k] to arr[n-1]), compare it with root of MH.
+a) If the element is less than the root then make it root and call heapify for MH
+b) Else ignore it.
 // The step 2 is O((n-k)*logk)
 
 3) Finally, root of the MH is the kth smallest element.
@@ -225,10 +225,87 @@ if __name__ == "__main__":
     n = len(arr)
     k = 4
     print kthSmallest(arr, k)   
+
+    #! coding=utf-8
+
+'''
+Method 4 (QuickSelect) 
+This is an optimization over method 1 if QuickSort is used as a sorting algorithm in first step. 
+In QuickSort, we pick a pivot element, then move the pivot element to its correct position and 
+partition the array around it. The idea is, not to do complete quicksort, but stop at the point 
+where pivot itself is k’th smallest element. Also, not to recur for both left and right sides of
+ pivot, but recur for one of them according to the position of pivot. The worst case time 
+ complexity of this method is O(n2), but it works in O(n) on average.
+'''
+def kthSmallest(arr, l, r, k):
+
+    # standard partion process of quickSort
+    # it considers the last element as pivot
+    # and moves all smaller element to left of it and
+    # greater elements to right, 
+    # the function is used by randomPartition()
+    def partition(arr, l, r):
+        x = arr[r]
+        i = l
+
+        for j in range(l, r):
+            if arr[j] <= x:
+                arr[i], arr[j] = arr[j], arr[i]
+                i += 1
+
+        arr[i],arr[r] = arr[r], arr[i]
+        return i
+
+    # If k is smaller than number of elements in array
+    if k > 0 and k <= r - l + 1:
+        # Partion the array around a random element and
+        # get position of pivot element in sorted array
+        pos = partition(arr, l, r)
+
+        # If position is the same as k
+        if pos-l == k-1:
+            return arr[pos]
+
+        # If position is more, recur for left subarray
+        if pos-l > k-1:
+            return kthSmallest(arr, l, pos-1, k)
+
+        # Else recur for right subarray
+        return kthSmallest(arr, pos+1, r, k-pos+l-1)
+
+    return -1
+
+'''
+5
+7
+10
+'''
+if __name__ == "__main__":
+    arr = [12, 3, 5, 7, 19]
+    n = len(arr)
+    k = 2
+    print kthSmallest(arr, 0, n-1, k)    
     
-# This function returns kth smallest element in distinct arr[l..r]
-# using quickSort based method,
-# Assumption: elements in arr[] are distinct
+    arr = [7, 10, 4, 3, 20, 15]
+    n = len(arr)
+    k = 3
+    print kthSmallest(arr, 0, n-1, k)  
+    
+    arr = [7, 10, 4, 3, 20, 15]
+    n = len(arr)
+    k = 4
+    print kthSmallest(arr, 0, n-1, k)  
+    
+
+'''
+Method 5
+The idea is to randomly pick a pivot element. To implement randomized partition,
+we use a random function, rand() to generate index between l and r, swap the element at 
+randomly generated index with the last element, and finally call the standard partition
+process which uses last element as pivot.
+The worst case time complexity of the above solution is still O(n2). In worst case, the randomized
+function may always pick a corner element. The expected time complexity of above randomized QuickSelect is Θ(n)
+'''
 def kthSmallest(arr, l, r, k):
 
     import random
