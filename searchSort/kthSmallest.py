@@ -1,6 +1,7 @@
 '''
 Method 1 (Simple Solution) 
-A Simple Solution is to sort the given array using a O(nlogn) sorting algorithm like Merge Sort, Heap Sort, etc and return the element at index k-1 in the sorted array. Time Complexity of this solution is O(nLogn).
+A Simple Solution is to sort the given array using a O(nlogn) sorting algorithm like Merge Sort, 
+Heap Sort, etc and return the element at index k-1 in the sorted array. Time Complexity of this solution is O(nLogn).
 '''
 def kthSmallest(theSeq, k):
 
