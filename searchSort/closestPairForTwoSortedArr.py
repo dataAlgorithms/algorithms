@@ -41,6 +41,11 @@ if __name__ == "__main__":
 '''
 Method 2: MergeWay
 
+Find the closest pair from two sorted arrays
+Given two sorted arrays and a number x, 
+find the pair whose sum is closest to x and 
+the pair has an element from each array.
+
 1) Merge given two arrays into an auxiliary array of size m+n using merge process of merge sort. 
 While merging keep another boolean array of size m+n to indicate whether the current element in 
 merged array is from ar1[] or ar2[].
