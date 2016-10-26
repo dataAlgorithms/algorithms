@@ -83,6 +83,8 @@ We can have following cases inside the loop.
 2) Else If x < y, we can move ahead in ar1[] as x cannot be a common element 
 3) Else If y < z, we can move ahead in ar2[] as y cannot be a common element 
 4) Else (We reach here when x > y and y > z), we can simply move ahead in ar3[] as z cannot be a common element.
+
+Time complexity of the above solution is O(n1 + n2 + n3)
 '''
 def findCommon(ar1, ar2, ar3):
 
