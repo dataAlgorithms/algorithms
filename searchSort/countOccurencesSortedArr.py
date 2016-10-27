@@ -1,5 +1,5 @@
 '''
-5. Problem Statement: Given a sorted array with possible duplicate elements.
+Problem Statement: Given a sorted array with possible duplicate elements.
  Find number of occurrences of input key in log N time
 '''
 def getRightPosition(aList, l, r, key):
