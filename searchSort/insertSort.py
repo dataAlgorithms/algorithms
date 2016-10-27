@@ -182,3 +182,58 @@ False
 '''   
 if __name__ == "__main__":
     test_linkedListBag()
+
+'''
+3. Binary Insertion Sort
+
+We can use binary search to reduce the number of comparisons in normal insertion sort. 
+Binary Insertion Sort find use binary search to find the proper location to insert 
+the selected item at each iteration. 
+In normal insertion, sort it takes O(i) (at ith iteration) in worst case. 
+we can reduce it to O(logi) by using binary search.
+'''
+# A binary search based function to find the position
+# where item should be inserted in a[low..high]
+def binarySearch(arr, item, low, high):
+
+    if high <= low:
+        if item > arr[low]:
+            return low+1
+        else:
+            return low
+
+    mid = (low + high) // 2
+    if item == arr[mid]:
+        return mid+1
+
+    if item > arr[mid]:
+        return binarySearch(arr, item, mid+1, high)
+    else:
+        return binarySearch(arr, item, low, mid-1)
+
+# Sort an array of arr of size n
+def insertionSort(arr):
+
+    for i in range(1, n):
+        j = i - 1
+        selected = arr[i]
+
+        # find location where selected should be inserted
+        loc = binarySearch(arr, selected, 0, j)
+
+        # move all elements after location to create space
+        while j >= loc:
+            arr[j+1] = arr[j]
+            j -= 1
+
+        arr[j+1] = selected
+
+'''
+[0, 12, 17, 23, 31, 37, 46, 54, 72, 88, 100]
+'''
+if __name__ == "__main__":
+    theSeq = [37, 23, 0, 17, 12, 72, 31, 46, 100, 88, 54]
+    n = len(theSeq)
+    insertionSort(theSeq)
+
+    print theSeq
