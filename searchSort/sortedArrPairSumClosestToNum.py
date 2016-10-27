@@ -12,6 +12,8 @@ Output: 4 and 10
 
 A simple solution is to consider every pair and keep track of closest pair 
 (absolute difference between pair sum and x is minimum). 
+
+Time complexity of this solution is O(n2)
 '''
 def sortedArrPairSumClosestToNum(theSeq, x):
 
