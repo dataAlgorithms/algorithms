@@ -14,6 +14,7 @@ Input: arr[] = {0, 0, 0, 0, 0, 0, 0}
 Output: 0
 A simple solution is to linearly traverse the array. The time complexity of the simple solution is O(n). 
 '''
+
 def count1BinaryArr(theSeq):
 
     # get the length
