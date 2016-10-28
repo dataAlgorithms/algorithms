@@ -46,6 +46,9 @@ def thirdLargest(arr):
 
     print "the third largest element is ", third
 
+'''
+the third largest element is  13
+'''
 if __name__ == "__main__":
     arr = [12, 13, 1, 10, 34, 16]
     thirdLargest(arr)
