@@ -53,4 +53,62 @@ if __name__ == "__main__":
     arr = [12, 13, 1, 10, 34, 16]
     thirdLargest(arr)
 
+'''
+Method Two: Optimize
+
+we need not to iterate array three times. We can find third largest in one traversal only.
+
+Initialize first = a[0] and second = -INF, third = -INF
+Iterate the array and compare each element with first.
+If a[i] is greater than first then update all first, second and third:
+third = second
+second = first
+first = arr[i]
+Else compare arr[i] with second, if its greater than second, then update:
+third = second
+second = arr[i]
+Else compare arr[i] with third, if its greater than third, then update:
+third = arr[i]
+Return third
+'''
+def thirdLargest(arr):
+
+    # get the length
+    n = len(arr)
+
+    # there should be at least three elements
+    if n < 3:
+        print "Array should at least have 3 elements."
+        return
+
+    # initialize first, second and third largest element
+    first = arr[0]
+    second = -1
+    third = -1
+
+    # traverse array elements to find the third largest
+    for i in range(1, n):
+
+        # If current element is greater than first
+        # then update first, second and third
+        if arr[i] > first:
+            third = second
+            second = first
+            first = arr[i]
+        # If arr[i] is in between first and second
+        elif arr[i] > second:
+            third = second
+            second = arr[i]
+        # If arr[i] is in between second and third
+        elif arr[i] > third:
+            third = arr[i]
+
+    print 'third element is ', third
+
+'''
+third element is  13
+'''
+if __name__ == "__main__":
+    arr = [12, 13, 1, 10, 34, 16]
+    thirdLargest(arr)
  
