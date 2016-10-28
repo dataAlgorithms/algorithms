@@ -1,4 +1,3 @@
-
 '''
 Fibonacci Search
 Given a sorted array arr[] of siz n and an element x to be searched in it. 
