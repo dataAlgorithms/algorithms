@@ -117,3 +117,8 @@ if __name__ == "__main__":
     target = 5
     theSeq = range(10)
     print binarySearchOverflow(theSeq, target)
+
+'''
+5. Given an array of N distinct integers, find floor value of input ‘key’
+https://github.com/dataAlgorithms/algorithms/blob/master/searchSort/findFloorForSortedArr.py
+'''
