@@ -120,5 +120,13 @@ if __name__ == "__main__":
 
 '''
 5. Given an array of N distinct integers, find floor value of input ‘key’
+
 https://github.com/dataAlgorithms/algorithms/blob/master/searchSort/findFloorForSortedArr.py
+'''
+
+'''
+6. Given a sorted array with possible duplicate elements.
+ Find number of occurrences of input key in log N time
+ 
+https://github.com/dataAlgorithms/algorithms/blob/master/searchSort/countOccurencesSortedArr.py
 '''
