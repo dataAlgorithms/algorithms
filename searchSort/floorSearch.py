@@ -23,6 +23,8 @@ Method 1 (Simple)
 
 A simple solution is linearly traverse input sorted array and 
 search for the first element greater than x. The element just before the found element is floor of x.
+
+Time Complexity : O(n)
 '''
 def floorSearch(arr, x):
 
