@@ -137,3 +137,28 @@ https://github.com/dataAlgorithms/algorithms/blob/master/searchSort/countOccuren
    
 https://github.com/dataAlgorithms/algorithms/blob/master/searchSort/minSortedRotatedArr.py
 '''
+
+'''
+8. Find a peak element using divide and conquer
+
+https://github.com/dataAlgorithms/algorithms/blob/master/searchSort/peakElement.py
+'''
+
+'''
+9. Find a Fixed Point in a given array
+Given an array of n distinct integers sorted in ascending order,
+write a function that returns a Fixed Point in the array,
+if there is any Fixed Point present in array, else returns -1.
+Fixed Point in an array is an index i such that arr[i] is equal to i.
+Note that integers in array can be negative.
+
+https://github.com/dataAlgorithms/algorithms/blob/master/searchSort/fixedPointArr.py
+'''
+
+'''
+10. Median of two sorted arrays
+
+https://github.com/dataAlgorithms/algorithms/blob/master/searchSort/medianSortedArr.py
+'''
+
+'''
