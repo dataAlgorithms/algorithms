@@ -130,3 +130,10 @@ https://github.com/dataAlgorithms/algorithms/blob/master/searchSort/findFloorFor
  
 https://github.com/dataAlgorithms/algorithms/blob/master/searchSort/countOccurencesSortedArr.py
 '''
+
+'''
+7. find minimum element in a sorted and rotated-array/
+   first decrease, then increase
+   
+https://github.com/dataAlgorithms/algorithms/blob/master/searchSort/minSortedRotatedArr.py
+'''
