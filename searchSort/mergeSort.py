@@ -304,6 +304,7 @@ if __name__ == "__main__":
 '''
 def getInvCountNV(arr):
     '''
+    O(n^2)
     Use native way to get inverse count
     '''
     
@@ -317,6 +318,7 @@ def getInvCountNV(arr):
     return inv_count
 
 '''
+O(nlogn)
 This function sorts the input array and returns the 
 number of inversions in the array
 '''
