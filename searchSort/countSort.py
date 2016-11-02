@@ -1,3 +1,5 @@
+#! coding=utf-8 
+
 '''
 1. count sort
 
@@ -26,75 +28,65 @@ the output sequence.
   Process the input data: 1, 4, 1, 2, 7, 5, 2. Position of 1 is 2.
   Put data 1 at index 2 in output. Decrease count by 1 to place
   next data 1 at an index 1 smaller than this index.
+  
+Suport int list, string
+not support negative int list
+
+Points to be noted:
+1. Counting sort is efficient if the range of input data is not significantly greater than the number of objects to be sorted. 
+Consider the situation where the input sequence is between range 1 to 10K and the data is 10, 5, 10K, 5K.
+2. It is not a comparison based sorting. It running time complexity is O(n) with space proportional to the range of data.
+3. It is often used as a sub-routine to another sorting algorithm like radix sort.
+4. Counting sort uses a partial hashing to count the occurrence of the data object in O(1).
+5. Counting sort can be extended to work for negative inputs also.
 '''
-def countSort(theSeq):
+def countSort(array):
 
-    def countSortMain(A, k):
-        n = len(A)
-
-        B = []
-        for i in range(n):
-            B.append(0)
-
-        C = []
-        for i in range(k):
-            C.append(0)
-
-        for j in range(0, n):
-            C[A[j]] = C[A[j]] + 1
-
-        for i in range(1, k):
-            C[i] = C[i] + C[i-1]
-
-        for j in range(n-1, -1, -1): 
-            B[C[A[j]]-1] = A[j]
-            C[A[j]] = C[A[j]] - 1
-
-        return B
-
-
-    def diffMaxMin(A):
-
-        small = A[0]
-        large = A[0]
-        for i in A:
-            if i < small:
-                small = i
-
-            if i > large:
-                large = i
-
-        return large - small + 1
-
-
-    k = diffMaxMin(theSeq)
-    theSeq = countSortMain(theSeq, k)
-
-    flag = 0
-    for i in range(len(theSeq)):
-
-        if theSeq[i] < 0:
-            flag = 1
-            break
-
-    if flag == 1:
-        newSeq = theSeq[:i]
-        tmpSeq = theSeq[i:]
-
-        tmpSeq.extend(newSeq)
+    # get the length
+    n = len(array)
+    
+    # check whether arr is a string
+    if isinstance(array, str):
+        flag = True
+        array = [ord(i) for i in array] 
     else:
-        tmpSeq = theSeq 
+        flag = False
         
-    return tmpSeq
-
+    maxval = max(array)
+    m = maxval + 1
+    count = [0] * m               # init with zeros
+    for a in array:
+        count[a] += 1             # count occurences
+    i = 0
+    for a in range(m):            # emit
+        for _ in range(count[a]): # - emit 'count[a]' copies of 'a'
+            array[i] = a
+            i += 1
+            
+    # Check str 
+    if flag is True:
+        for i in range(n):
+            array[i] = chr(array[i])
+            
+    if flag is True:
+        return ''.join(array)
+    else:
+        return array
+        
 '''
-theSeq sorted after: [-994, -943, -928, -873, -867, -811, -794, -779, -762, -730
-, -668, -602, -581, -559, -513, -492, -470, -439, -430, -428, -414, -406, -403,
--372, -328, -284, -282, -197, -150, -90, -60, -35, 7, 38, 174, 177, 202, 262, 27
-6, 302, 309, 333, 350, 445, 486, 510, 554, 559, 587, 616, 630, 661, 664, 746, 75
-3, 761, 772, 799, 943, 962]
+[101, 101, 101, 101, 102, 103, 103, 107, 107, 111, 114, 115, 115]
+eeeefggkkorss
+[1, 1, 2, 2, 4, 5, 7]
 '''
 if __name__ == "__main__":
-    theSeq = [-994, -943, -928, -873, -867, -811, -794, -779, -762, -730, -668, -602, -581, -559, -513, -492, -470, -439, -430, -428, -414, -406, -403, -372, -328, -284, -282, -197, -150, -90, -60, -35, 7, 38, 174, 177, 202, 262, 276, 302, 309, 333, 350, 445, 486, 510, 554, 559, 587, 616, 630, 661, 664, 746, 753, 761, 772, 799, 943, 962]
-    countSort(theSeq)
-    print 'theSeq sorted after:', theSeq
+    arr = [103, 101, 101, 107, 115, 102, 111, 114, 103, 101, 101, 107, 115]
+    newarr = countSort(arr)
+    print newarr
+    
+    arr = 'geeksforgeeks'
+    arr = countSort(arr)
+    print arr
+    
+    theSeq = [1, 4, 1, 2, 7, 5, 2]
+    theSeq = countSort(theSeq)
+    print theSeq
