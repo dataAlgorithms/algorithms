@@ -1,29 +1,32 @@
-# linear search 
+'''
+Problem: Given an array arr[] of n elements, write a function to search a given element x in arr[].
+A simple approach is to do linear search, i.e
+Start from the leftmost element of arr[] and one by one compare x with each element of arr[]
+If x matches with an element, return the index.
+If x doesn’t match with any of elements, return -1.
+'''
 def linearSearch(theSeq, target):
 
     # get the length
     n = len(theSeq)
 
-    # do loop
-    for i in range(n):
-        if target == theSeq[i]:
-            return i
-
-    return -1
+    # loop
+    for pos in range(n):
+        if target == theSeq[pos]:
+            return pos
+    else:
+        return -1
 
 '''
-theSeq: [1, 2, 12, 7, 19, 14, 6, 15, 17, 13, 0, 16, 4, 11, 9, 8, 5, 18, 10, 3]
-7
+Result:
+
+2
+-1
 -1
 '''
 if __name__ == "__main__":
-    import random
-    theSeq = range(20)
-    random.shuffle(theSeq)
 
-    print 'theSeq:', theSeq
-    target = 15
-    print linearSearch(theSeq, target) 
-
-    target = 150
-    print linearSearch(theSeq, target) 
+    targets = [2, 6, None]
+    theSeq = [1, 3, 2, 4, 5]
+    for target in targets:
+        print linearSearch(theSeq, target)
