@@ -64,8 +64,9 @@ def quickSortNew(theSeq):
             if left < right:
                 theSeq[left], theSeq[right] = theSeq[right], theSeq[left]
                 
-        theSeq[first] = theSeq[right]
-        theSeq[right] = pivot
+        if first != right:
+            theSeq[first] = theSeq[right]
+            theSeq[right] = pivot
         
         return right
     
