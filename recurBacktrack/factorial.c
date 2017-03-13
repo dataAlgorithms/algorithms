@@ -15,8 +15,8 @@ double facRecursive(unsigned int n) {
     }
 }
 
-//Calculate factorial of positive integer using loop way
-double facLoop(unsigned int n) {
+//Calculate factorial of positive integer using iteration way
+double facIteration(unsigned int n) {
 
     double facResult = 1.0;
     int i;
